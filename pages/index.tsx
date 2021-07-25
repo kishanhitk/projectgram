@@ -38,9 +38,7 @@ export default function Home({ projects }: IHomePageProps) {
           <Link key={project.id} passHref href={project.slug}>
             <Stack my={7} cursor="pointer">
               <SkeletonCircle size="20" />
-              <Heading fontSize="xl" fontweight="normal">
-                {project.title}
-              </Heading>
+              <Heading fontSize="xl">{project.title}</Heading>
               <Text color="gray" fontSize="lg">
                 {project.shortDescription}
               </Text>

@@ -17,12 +17,16 @@ import {
 } from "@chakra-ui/react";
 import { Routes } from "config";
 import { SunIcon, MoonIcon, SearchIcon } from "@chakra-ui/icons";
+import { AuthService } from "services/auth.services";
 interface NavLinkProps extends ButtonProps {
   url: string;
   children: ReactNode;
 }
 export const Header = () => {
+  const userToken: any = AuthService.getCurrentUser();
+  const isLoggedIn = userToken !== null;
   const { colorMode, toggleColorMode } = useColorMode();
+  console.log(userToken);
 
   return (
     <Flex
@@ -71,8 +75,14 @@ export const Header = () => {
       <Box as="nav">
         <HStack>
           <HStack>
-            <NavLink url={Routes.submitNewProject}>Submit Project 🚀</NavLink>
-            <NavLinkSolid url={Routes.login}>Login</NavLinkSolid>
+            {isLoggedIn && (
+              <NavLink url={Routes.submitNewProject}>Submit Project 🚀</NavLink>
+            )}
+            {!isLoggedIn ? (
+              <NavLinkSolid url={Routes.login}>Login</NavLinkSolid>
+            ) : (
+              <Avatar name={userToken.username}></Avatar>
+            )}
           </HStack>
           <IconButton
             onClick={toggleColorMode}
