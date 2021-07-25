@@ -78,6 +78,16 @@ export const Header = () => {
             {isLoggedIn && (
               <NavLink url={Routes.submitNewProject}>Submit Project 🚀</NavLink>
             )}
+            {isLoggedIn && (
+              <Button
+                onClick={() => {
+                  AuthService.logout();
+                  window.location.reload();
+                }}
+              >
+                LogOut{" "}
+              </Button>
+            )}
             {!isLoggedIn ? (
               <NavLinkSolid url={Routes.login}>Login</NavLinkSolid>
             ) : (
