@@ -38,19 +38,18 @@ export default function Home({ projects }: IHomePageProps) {
           <Link key={project.id} passHref href={project.slug}>
             <Stack my={7} cursor="pointer">
               <SkeletonCircle size="20" />
-              <Heading fontSize="xl">{project.title}</Heading>
+              <Heading fontSize="xl" fontweight="normal">
+                {project.title}
+              </Heading>
               <Text color="gray" fontSize="lg">
                 {project.shortDescription}
               </Text>
-              <Text color="gray" fontSize="md">
+              <Text color="gray" fontSize="sm">
                 {project.longDescription}
               </Text>
-              <SkeletonText mt="4" noOfLines={5} spacing="2" />
             </Stack>
           </Link>
         ))}
-
-        {/* <Skeleton height="100px" /> */}
       </Stack>
     </MainLayout>
   );
