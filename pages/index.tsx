@@ -15,6 +15,7 @@ import Head from "next/head";
 import React from "react";
 import { Project } from "types/projects";
 import Link from "next/link";
+import { BASE_URL } from "config";
 interface IHomePageProps {
   projects: Project[];
 }
@@ -35,11 +36,15 @@ export default function Home({ projects }: IHomePageProps) {
       <Stack mt={10}>
         {projects.map((project) => (
           <Link key={project.id} passHref href={project.slug}>
-            <Stack my={5} cursor="pointer">
+            <Stack my={7} cursor="pointer">
               <SkeletonCircle size="20" />
-              <Heading fontSize="lg">{project.title}</Heading>
-              <Text>{project.shortDescription}</Text>
-              <Skeleton height="30px" />
+              <Heading fontSize="xl">{project.title}</Heading>
+              <Text color="gray" fontSize="lg">
+                {project.shortDescription}
+              </Text>
+              <Text color="gray" fontSize="md">
+                {project.longDescription}
+              </Text>
               <SkeletonText mt="4" noOfLines={5} spacing="2" />
             </Stack>
           </Link>
@@ -53,8 +58,7 @@ export default function Home({ projects }: IHomePageProps) {
 
 // Get Server Side Props
 export async function getServerSideProps(context) {
-  const baseUrl = process.env.BASE_URL;
-  const res = await axios.get(`${baseUrl}/projects`);
+  const res = await axios.get(`${BASE_URL}/projects`);
   const projects: Project[] = await res.data;
   return {
     props: {
