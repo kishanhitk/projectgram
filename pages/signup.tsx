@@ -16,6 +16,7 @@ import LoginForm from "components/LoginForm";
 import * as React from "react";
 import { FaFacebook, FaGithub, FaGoogle } from "react-icons/fa";
 import SignUpForm from "components/SignUpForm";
+import Logo from "components/Logo";
 
 function SignUp() {
   return (
@@ -27,7 +28,7 @@ function SignUp() {
     >
       <Box maxW="md" mx="auto">
         <Center>
-          <Avatar size="md" mb={5} name="Project Gram"></Avatar>
+          <Logo />
         </Center>
         <Heading textAlign="center" size="xl" fontWeight="extrabold">
           Create new account

@@ -18,6 +18,7 @@ import {
 import { Routes } from "config";
 import { SunIcon, MoonIcon, SearchIcon } from "@chakra-ui/icons";
 import { AuthService } from "services/auth.services";
+import Logo from "components/Logo";
 interface NavLinkProps extends ButtonProps {
   url: string;
   children: ReactNode;

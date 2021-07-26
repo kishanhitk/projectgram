@@ -15,6 +15,8 @@ import { TextLink } from "components/TextLink";
 import LoginForm from "components/LoginForm";
 import * as React from "react";
 import { FaFacebook, FaGithub, FaGoogle } from "react-icons/fa";
+import Link from "next/link";
+import Logo from "components/Logo";
 
 const Login = () => (
   <Box
@@ -25,7 +27,7 @@ const Login = () => (
   >
     <Box maxW="md" mx="auto">
       <Center>
-        <Avatar size="md" mb={5} name="Project Gram"></Avatar>
+        <Logo />
       </Center>
       <Heading textAlign="center" size="xl" fontWeight="extrabold">
         Sign in to your account
