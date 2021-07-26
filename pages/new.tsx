@@ -13,7 +13,7 @@ function SubmitProject() {
   if (!userToken) {
     return (
       <MainLayout>
-        <Heading>Please Login</Heading>;
+        <Heading>Please Login</Heading>
         <Link passHref href="/login">
           <Button>Login</Button>
         </Link>

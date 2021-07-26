@@ -48,7 +48,7 @@ export const Header = () => {
         transition: "background-color 0.1 ease-in-out",
       }}
     >
-      <Box>
+      <Box as="nav">
         <HStack spacing={5}>
           <NextLink href={Routes.home}>
             <Link _hover={{ textDecor: "none" }}>
@@ -70,7 +70,6 @@ export const Header = () => {
           </NextLink>
         </HStack>
       </Box>
-
       {/* Nav */}
       <Box as="nav">
         <HStack>
