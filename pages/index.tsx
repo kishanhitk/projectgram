@@ -35,7 +35,7 @@ export default function Home({ projects }: IHomePageProps) {
       </HStack>
       <Stack mt={10}>
         {projects.map((project) => (
-          <Link key={project.id} passHref href={project.slug}>
+          <Link key={project.id} passHref href={`/projects/${project.slug}`}>
             <Stack my={7} cursor="pointer">
               <SkeletonCircle size="20" />
               <Heading fontSize="xl">{project.title}</Heading>
