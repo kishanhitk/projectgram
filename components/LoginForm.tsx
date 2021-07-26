@@ -21,6 +21,7 @@ function LoginForm(props: HTMLChakraProps<"form">) {
   const [username, setUsername] = React.useState("kishanhitk");
   const [password, setPassword] = React.useState("1234");
   const [error, setError] = React.useState(null);
+  const [isLoading, setIsLoading] = React.useState(false);
   const router = useRouter();
 
   return (
@@ -28,6 +29,7 @@ function LoginForm(props: HTMLChakraProps<"form">) {
       onSubmit={async (e) => {
         e.preventDefault();
         console.log(username);
+        setIsLoading(true);
         try {
           //   AuthService.login(username, password);
           const res = await axios.post(`${BASE_URL}/auth/login`, {
@@ -45,6 +47,7 @@ function LoginForm(props: HTMLChakraProps<"form">) {
           console.log(error);
           setError(error.response.data.message);
         }
+        setIsLoading(false);
       }}
       {...props}
     >
@@ -64,7 +67,13 @@ function LoginForm(props: HTMLChakraProps<"form">) {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <Button type="submit" colorScheme="blue" size="lg" fontSize="md">
+        <Button
+          isLoading={isLoading}
+          type="submit"
+          colorScheme="blue"
+          size="lg"
+          fontSize="md"
+        >
           Sign in
         </Button>
         <Box color="red.500" p={2} textAlign="center">
