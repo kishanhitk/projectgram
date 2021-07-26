@@ -32,7 +32,7 @@ const Login = () => (
       </Heading>
       <Text mt="4" mb="8" align="center" maxW="md" fontWeight="medium">
         <Text as="span">Don&apos;t have an account?</Text>
-        <TextLink href="#">Create new account</TextLink>
+        <TextLink href="/signup">Create new account</TextLink>
       </Text>
       <Card>
         <LoginForm />
