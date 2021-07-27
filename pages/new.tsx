@@ -26,7 +26,7 @@ import ProjectSubmissionForm from "components/ProjectSubmissionForm";
 function SubmitProject() {
   const userToken = AuthService.getCurrentUser();
   const router = useRouter();
-
+const boxBGcolor = useColorModeValue("gray.50", "inherit");
   if (!userToken) {
     return (
       <MainLayout>
@@ -37,11 +37,11 @@ function SubmitProject() {
       </MainLayout>
     );
   }
-
+ 
   return (
     <MainLayout>
       <Box
-        bg={useColorModeValue("gray.50", "inherit")}
+        bg={boxBGcolor}
         minH="100vh"
         py="12"
         px={{ base: "4", lg: "8" }}
