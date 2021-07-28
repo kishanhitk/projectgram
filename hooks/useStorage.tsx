@@ -7,6 +7,7 @@ const useStorage = (file) => {
   const [error, seterror] = useState(null);
   useEffect(() => {
     if (file != null) {
+      //! Don't use filename as it is not unique 
       const storageRef = firebase.storage().ref(file.name);
       storageRef.put(file).on(
         "state-changed",

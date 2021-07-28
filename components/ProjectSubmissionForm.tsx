@@ -7,11 +7,15 @@ import {
   FormLabel,
   HTMLChakraProps,
   Icon,
+  Img,
   Input,
   InputGroup,
   InputLeftElement,
   Stack,
+  Text,
+  Image,
   Textarea,
+  HStack,
 } from "@chakra-ui/react";
 import axios from "axios";
 import { BASE_URL } from "config";
@@ -23,6 +27,7 @@ import { FaWindows } from "react-icons/fa";
 import UploadInput from "./UploadInput";
 import useStorage from "hooks/useStorage";
 import { FiFile } from "react-icons/fi";
+import { ImCross } from "react-icons/im";
 
 function ProjectSubmissionForm(props: HTMLChakraProps<"form">) {
   const [show, setShow] = React.useState(false);
@@ -36,12 +41,13 @@ function ProjectSubmissionForm(props: HTMLChakraProps<"form">) {
   const [file, setFile] = React.useState(null);
   const inputRef = React.useRef<HTMLInputElement>();
   const { url, progress } = useStorage(file);
+  const [imageUrl, setImageUrl] = React.useState(null);
 
-  React.useEffect(() => {
-    if (url) {
-      setFile(null);
-    }
-  }, [url, setFile]);
+  // React.useEffect(() => {
+  //   if (url) {
+  //     setFile(null);
+  //   }
+  // }, [url, setFile]);
 
   return (
     <chakra.form
@@ -106,7 +112,7 @@ function ProjectSubmissionForm(props: HTMLChakraProps<"form">) {
           />
         </FormControl>
         <FormControl>
-          <FormLabel htmlFor="writeUpFile">Project Screenshots</FormLabel>
+          <FormLabel htmlFor="writeUpFile">Project Featured Image</FormLabel>
           <InputGroup cursor="grab">
             <InputLeftElement
               pointerEvents="none"
@@ -122,15 +128,34 @@ function ProjectSubmissionForm(props: HTMLChakraProps<"form">) {
                 const selectedFile = e.target.files[0];
                 console.log(selectedFile);
                 setFile(selectedFile);
+                console.log(URL.createObjectURL(selectedFile));
+                setImageUrl(URL.createObjectURL(selectedFile));
               }}
             ></input>
-            <Input
+            <Button
+              width="100%"
               placeholder={"Your file ..."}
               onClick={() => inputRef.current.click()}
-            />
+            >
+              Upload File
+            </Button>
           </InputGroup>
           <FormErrorMessage>{progress}</FormErrorMessage>
         </FormControl>
+        {imageUrl && (
+          <Box postion="relative" bg="blue">
+            <Button
+              right="100"
+              colorScheme="red"
+              onClick={() => setImageUrl(null)}
+              zIndex="2"
+              position="absolute"
+            >
+              <Icon as={ImCross} />
+            </Button>
+            <Image src={imageUrl} alt="image"></Image>
+          </Box>
+        )}
         <FormControl>
           <FormLabel>Live URL</FormLabel>
           <Input
