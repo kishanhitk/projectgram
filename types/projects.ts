@@ -9,4 +9,8 @@ export interface Project {
   website: string;
   upvote_count: number;
   hashtags: string[];
+  creator: User;
+}
+export interface User {
+  firstName: string;
 }

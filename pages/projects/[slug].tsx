@@ -1,4 +1,4 @@
-import { Heading } from "@chakra-ui/react";
+import { Heading, Text } from "@chakra-ui/react";
 import axios from "axios";
 import { BASE_URL } from "config";
 import { MainLayout } from "layout";
@@ -11,6 +11,7 @@ function ProjectPage({ project }: IProjectPageProps) {
   return (
     <MainLayout>
       <Heading>{project.title}</Heading>
+      <Text>by {project.creator.firstName}</Text>
     </MainLayout>
   );
 }

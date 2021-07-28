@@ -76,7 +76,9 @@ export const Header = () => {
         <HStack>
           <HStack>
             {isLoggedIn && (
-              <NavLink url={Routes.submitNewProject}>Submit Project 🚀</NavLink>
+              <NavLink key="new" url={Routes.submitNewProject}>
+                Submit Project 🚀
+              </NavLink>
             )}
             {isLoggedIn && (
               <Button
@@ -89,7 +91,9 @@ export const Header = () => {
               </Button>
             )}
             {!isLoggedIn ? (
-              <NavLinkSolid url={Routes.login}>Login</NavLinkSolid>
+              <NavLinkSolid key="login" url={Routes.login}>
+                Login
+              </NavLinkSolid>
             ) : (
               <Avatar name={userToken.username}></Avatar>
             )}

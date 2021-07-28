@@ -1,21 +1,11 @@
-import {
-  Button,
-  Heading,
-  HStack,
-  Skeleton,
-  Text,
-  SkeletonCircle,
-  SkeletonText,
-  Spacer,
-  Stack,
-} from "@chakra-ui/react";
+import { Button, Heading, HStack, Spacer, Stack } from "@chakra-ui/react";
 import axios from "axios";
 import { MainLayout } from "layout/MainLayout";
 import Head from "next/head";
 import React from "react";
 import { Project } from "types/projects";
-import Link from "next/link";
 import { BASE_URL } from "config";
+import ProjectDisplayCard from "components/ProjectDisplayCard";
 interface IHomePageProps {
   projects: Project[];
 }
@@ -35,18 +25,7 @@ export default function Home({ projects }: IHomePageProps) {
       </HStack>
       <Stack mt={10}>
         {projects.map((project) => (
-          <Link key={project.id} passHref href={`/projects/${project.slug}`}>
-            <Stack my={7} cursor="pointer">
-              <SkeletonCircle size="20" />
-              <Heading fontSize="xl">{project.title}</Heading>
-              <Text color="gray" fontSize="lg">
-                {project.shortDescription}
-              </Text>
-              <Text color="gray" fontSize="sm">
-                {project.longDescription}
-              </Text>
-            </Stack>
-          </Link>
+          <ProjectDisplayCard key={project.slug} project={project} />
         ))}
       </Stack>
     </MainLayout>

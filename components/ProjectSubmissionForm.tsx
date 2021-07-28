@@ -3,9 +3,13 @@ import {
   Button,
   chakra,
   FormControl,
+  FormErrorMessage,
   FormLabel,
   HTMLChakraProps,
+  Icon,
   Input,
+  InputGroup,
+  InputLeftElement,
   Stack,
   Textarea,
 } from "@chakra-ui/react";
@@ -16,15 +20,28 @@ import * as React from "react";
 import { PasswordField } from "./PasswordField";
 import jwt_decode from "jwt-decode";
 import { FaWindows } from "react-icons/fa";
+import UploadInput from "./UploadInput";
+import useStorage from "hooks/useStorage";
+import { FiFile } from "react-icons/fi";
 
 function ProjectSubmissionForm(props: HTMLChakraProps<"form">) {
   const [show, setShow] = React.useState(false);
   const handleClick = () => setShow(!show);
   const [title, setTitle] = React.useState("");
   const [shortDescription, setShortDescription] = React.useState("");
+  const [longDescription, setLongDescription] = React.useState("");
   const [error, setError] = React.useState(null);
   const [isLoading, setIsLoading] = React.useState(false);
   const router = useRouter();
+  const [file, setFile] = React.useState(null);
+  const inputRef = React.useRef<HTMLInputElement>();
+  const { url, progress } = useStorage(file);
+
+  React.useEffect(() => {
+    if (url) {
+      setFile(null);
+    }
+  }, [url, setFile]);
 
   return (
     <chakra.form
@@ -35,11 +52,14 @@ function ProjectSubmissionForm(props: HTMLChakraProps<"form">) {
         try {
           const token = JSON.parse(window.localStorage.getItem("token"));
           //   AuthService.login(username, password);
+          console.log(token);
           const res = await axios.post(
             `${BASE_URL}/projects`,
             {
               title,
               shortDescription,
+              longDescription,
+              images: [url],
             },
             {
               headers: {
@@ -57,7 +77,7 @@ function ProjectSubmissionForm(props: HTMLChakraProps<"form">) {
       {...props}
     >
       <Stack spacing="6">
-        <FormControl>
+        <FormControl isRequired>
           <FormLabel>Name of Project</FormLabel>
           <Input
             type="text"
@@ -66,6 +86,7 @@ function ProjectSubmissionForm(props: HTMLChakraProps<"form">) {
             onChange={(e) => setTitle(e.target.value)}
           />
         </FormControl>
+        {/* <UploadInput /> */}
         <FormControl>
           <FormLabel>Tweet size description of your project</FormLabel>
           <Input
@@ -80,9 +101,35 @@ function ProjectSubmissionForm(props: HTMLChakraProps<"form">) {
           <Textarea
             type="text"
             required
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            value={longDescription}
+            onChange={(e) => setLongDescription(e.target.value)}
           />
+        </FormControl>
+        <FormControl>
+          <FormLabel htmlFor="writeUpFile">Project Screenshots</FormLabel>
+          <InputGroup cursor="grab">
+            <InputLeftElement
+              pointerEvents="none"
+              // eslint-disable-next-line react/no-children-prop
+              children={<Icon as={FiFile} />}
+            />
+            <input
+              type="file"
+              ref={inputRef}
+              // inputRef={ref}
+              style={{ display: "none" }}
+              onChange={(e) => {
+                const selectedFile = e.target.files[0];
+                console.log(selectedFile);
+                setFile(selectedFile);
+              }}
+            ></input>
+            <Input
+              placeholder={"Your file ..."}
+              onClick={() => inputRef.current.click()}
+            />
+          </InputGroup>
+          <FormErrorMessage>{progress}</FormErrorMessage>
         </FormControl>
         <FormControl>
           <FormLabel>Live URL</FormLabel>

@@ -6,7 +6,7 @@ import {
   SimpleGrid,
   useColorModeValue,
   VisuallyHidden,
-  Text
+  Text,
 } from "@chakra-ui/react";
 import { MainLayout } from "layout";
 import { Header } from "layout/Header";
@@ -22,11 +22,13 @@ import Logo from "components/Logo";
 import { TextLink } from "components/TextLink";
 import { FaFacebook, FaGoogle, FaGithub } from "react-icons/fa";
 import ProjectSubmissionForm from "components/ProjectSubmissionForm";
+import firebaseClient from "config/firebase";
 
 function SubmitProject() {
   const userToken = AuthService.getCurrentUser();
   const router = useRouter();
-const boxBGcolor = useColorModeValue("gray.50", "inherit");
+  const boxBGcolor = useColorModeValue("gray.50", "inherit");
+
   if (!userToken) {
     return (
       <MainLayout>
@@ -37,27 +39,25 @@ const boxBGcolor = useColorModeValue("gray.50", "inherit");
       </MainLayout>
     );
   }
- 
+  firebaseClient();
   return (
     <MainLayout>
-      <Box
-        bg={boxBGcolor}
-        minH="100vh"
-        py="12"
-        px={{ base: "4", lg: "8" }}
-      >
-        <Box maxW="md" mx="auto">
+      <Box minH="100vh" py="12" px={{ base: "4", lg: "8" }}>
+        <Box maxW="md" mx="auto" boxShadow="lg">
           <Center>
             <Logo />
           </Center>
-          <Heading textAlign="center" size="xl" fontWeight="extrabold">
+          <Heading
+            fontSize="xl"
+            textAlign="center"
+            size="xl"
+            fontWeight="extrabold"
+          >
             👋 Tell us more about this project
           </Heading>
-          
+
           <Card>
             <ProjectSubmissionForm />
-            
-            
           </Card>
         </Box>
       </Box>
