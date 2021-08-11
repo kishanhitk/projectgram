@@ -1,4 +1,4 @@
-import { Button, Heading, HStack, Spacer, Stack } from "@chakra-ui/react";
+import { Button, Heading, HStack, Link, Spacer, Stack } from "@chakra-ui/react";
 import axios from "axios";
 import { MainLayout } from "layout/MainLayout";
 import Head from "next/head";
@@ -20,8 +20,12 @@ export default function Home({ projects }: IHomePageProps) {
       <HStack>
         <Heading>Top Projects</Heading>
         <Spacer />
-        <Button variant="ghost">New</Button>
-        <Button variant="ghost">Trending</Button>
+        <Link href="/latest" passHref>
+          <Button variant="ghost">Latest</Button>
+        </Link>
+        <Link href="/trending" passHref>
+          <Button variant="ghost">Trending</Button>
+        </Link>
       </HStack>
       <Stack mt={10}>
         {projects.map((project) => (
