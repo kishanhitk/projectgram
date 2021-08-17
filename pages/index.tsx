@@ -38,7 +38,7 @@ export default function Home({ projects }: IHomePageProps) {
 
 // Get Server Side Props
 export async function getServerSideProps(context) {
-  const res = await axios.get(`${BASE_URL}/projects`);
+  const res = await axios.get(`${BASE_URL}/projects?sortBy=popular`);
   const projects: Project[] = await res.data;
   return {
     props: {
