@@ -18,16 +18,18 @@ import {
 import { Routes } from "config";
 import { SunIcon, MoonIcon, SearchIcon } from "@chakra-ui/icons";
 import { AuthService } from "services/auth.services";
-import Logo from "components/Logo";
+import { useRouter } from "next/router";
 interface NavLinkProps extends ButtonProps {
   url: string;
   children: ReactNode;
 }
 export const Header = () => {
+  const router = useRouter();
   const userToken: any = AuthService.getCurrentUser();
   const isLoggedIn = userToken !== null;
   const { colorMode, toggleColorMode } = useColorMode();
   console.log(userToken);
+  const [searchInput, setSearchInput] = React.useState("");
 
   return (
     <Flex
@@ -56,16 +58,28 @@ export const Header = () => {
               <Avatar name="Project Gram"></Avatar>
             </Link>
           </NextLink>
-          <InputGroup>
-            <InputLeftElement
-              pointerEvents="none"
-              color="gray.300"
-              fontSize="1.2em"
-              // eslint-disable-next-line react/no-children-prop
-              children={<SearchIcon color="gray.300" />}
-            />
-            <Input variant="filled" placeholder="Search"></Input>
-          </InputGroup>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              router.push(`/search?q=${searchInput}`);
+            }}
+          >
+            <InputGroup>
+              <InputLeftElement
+                pointerEvents="none"
+                color="gray.300"
+                fontSize="1.2em"
+                // eslint-disable-next-line react/no-children-prop
+                children={<SearchIcon color="gray.300" />}
+              />
+              <Input
+                variant="filled"
+                placeholder="Search"
+                value={searchInput}
+                onChange={(e) => setSearchInput(e.target.value)}
+              ></Input>
+            </InputGroup>
+          </form>
           <NextLink href={Routes.home}>
             <NavLink url={Routes.about}>About</NavLink>
           </NextLink>
