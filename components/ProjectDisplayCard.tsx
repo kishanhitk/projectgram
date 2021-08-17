@@ -16,7 +16,7 @@ function ProjectDisplayCard({ project }: IProjectDisplayCardProps) {
   const boxBGcolor = useColorModeValue("gray.100", "gray.700");
   return (
     <Stack my={7} bgColor={boxBGcolor} p={5} rounded={5} cursor="pointer">
-      {project.screenshots ? (
+      {project.bannerImage ? (
         <Link href={`/projects/${project.slug}`} passHref>
           <Img
             width="100%"
@@ -24,7 +24,7 @@ function ProjectDisplayCard({ project }: IProjectDisplayCardProps) {
             fit="fill"
             rounded={5}
             alt={project.title}
-            src={project.screenshots[0]}
+            src={project.bannerImage}
           ></Img>
         </Link>
       ) : (
