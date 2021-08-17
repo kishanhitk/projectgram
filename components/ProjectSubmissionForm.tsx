@@ -42,7 +42,8 @@ function ProjectSubmissionForm(props: HTMLChakraProps<"form">) {
   const inputRef = React.useRef<HTMLInputElement>();
   const { url, progress } = useStorage(file);
   const [imageUrl, setImageUrl] = React.useState(null);
-
+  const [liveUrl, setLiveUrl] = React.useState(null);
+  const [sourceCode, setSourceCode] = React.useState(null);
   // React.useEffect(() => {
   //   if (url) {
   //     setFile(null);
@@ -65,7 +66,7 @@ function ProjectSubmissionForm(props: HTMLChakraProps<"form">) {
               title,
               shortDescription,
               longDescription,
-              images: [url],
+              bannerImage: url,
             },
             {
               headers: {
@@ -160,16 +161,16 @@ function ProjectSubmissionForm(props: HTMLChakraProps<"form">) {
           <FormLabel>Live URL</FormLabel>
           <Input
             type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            value={liveUrl}
+            onChange={(e) => setLiveUrl(e.target.value)}
           />
         </FormControl>
         <FormControl>
           <FormLabel>Source Code</FormLabel>
           <Input
             type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            value={sourceCode}
+            onChange={(e) => setSourceCode(e.target.value)}
           />
         </FormControl>
         <Button
