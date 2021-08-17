@@ -20,25 +20,28 @@ const DUMMY_DATA = [
 ];
 
 interface IProfilePageProps {
-  user:User
+  user: User;
 }
-const Profile = ({user}:IProfilePageProps) => {
-  
+const Profile = ({ user }: IProfilePageProps) => {
   return (
     <MainLayout>
       <Card>
         <VStack justifyContent="center" alignItems="center">
           <Avatar size="2xl" name={user.firstName} marginRight="1.5" />
-          <Flex justifyContent="center" flexDirection="column" alignItems="center">
+          <Flex
+            justifyContent="center"
+            flexDirection="column"
+            alignItems="center"
+          >
             <Heading p="1.5">KUMAR ANKUR</Heading>
             <Text p="1">ReactJS developer</Text>
             <Text p="1">@kumar_ank123</Text>
           </Flex>
         </VStack>
       </Card>
-      {DUMMY_DATA.map((item) => {
+      {DUMMY_DATA.map((item, index) => {
         return (
-          <Card marginTop="2" rounded="sm">
+          <Card marginTop="2" key={index} rounded="sm">
             {item.Desc}
           </Card>
         );
@@ -47,10 +50,7 @@ const Profile = ({user}:IProfilePageProps) => {
   );
 };
 
-
-
 export default Profile;
-
 
 export async function getServerSideProps(context) {
   const username = context.params.username;
