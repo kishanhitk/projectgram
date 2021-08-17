@@ -20,7 +20,7 @@ function ProjectPage({ project }: IProjectPageProps) {
           fit="fill"
           rounded={5}
           alt={project.title}
-          src={project.images[0]}
+          src={project.screenshots[0]}
         ></Img>
 
         <VStack align="flex-start" spacing={1}>

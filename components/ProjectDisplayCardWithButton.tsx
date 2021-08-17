@@ -19,7 +19,7 @@ function ProjectDisplayCardWithButtons({ project }: IProjectDisplayCardProps) {
 
   return (
     <Stack my={7} bgColor={boxBGcolor} p={5} rounded={5} spacing={3}>
-      {project.images ? (
+      {project.screenshots ? (
         <Link href={`/projects/${project.slug}`} passHref>
           <Img
             width="100%"
@@ -27,7 +27,7 @@ function ProjectDisplayCardWithButtons({ project }: IProjectDisplayCardProps) {
             fit="fill"
             rounded={5}
             alt={project.title}
-            src={project.images[0]}
+            src={project.screenshots[0]}
           ></Img>
         </Link>
       ) : (
