@@ -30,8 +30,6 @@ import { FiFile } from "react-icons/fi";
 import { ImCross } from "react-icons/im";
 
 function ProjectSubmissionForm(props: HTMLChakraProps<"form">) {
-  const [show, setShow] = React.useState(false);
-  const handleClick = () => setShow(!show);
   const [title, setTitle] = React.useState("");
   const [shortDescription, setShortDescription] = React.useState("");
   const [longDescription, setLongDescription] = React.useState("");
