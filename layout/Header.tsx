@@ -95,7 +95,12 @@ export const Header = () => {
                 Login
               </NavLinkSolid>
             ) : (
-              <Avatar name={userToken.username}></Avatar>
+              <NextLink href={Routes.profile}>
+                <Avatar
+                  name={userToken.username}
+                  _hover={{ textDecor: "none",cursor:"pointer" }}
+                ></Avatar>
+              </NextLink>
             )}
           </HStack>
           <IconButton

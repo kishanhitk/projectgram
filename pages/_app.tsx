@@ -16,4 +16,15 @@ function MyApp({ Component, pageProps }) {
   );
 }
 
+
+
 export default MyApp;
+
+
+export async function getInitialProps(context) {
+  console.log(context);
+  return {
+    props: {
+    },
+  };
+}
