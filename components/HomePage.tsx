@@ -1,6 +1,7 @@
-import { HStack, Heading, Spacer, Link, Button, Stack } from "@chakra-ui/react";
+import { HStack, Heading, Spacer, Button, Stack } from "@chakra-ui/react";
 import { AllFilters, Filters } from "config/filters";
 import { MainLayout } from "layout";
+import Link from "next/link";
 import Head from "next/head";
 import React from "react";
 import { Project } from "types/projects";

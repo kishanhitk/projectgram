@@ -1,5 +1,6 @@
-import { Button, Heading, HStack, Link, Spacer, Stack } from "@chakra-ui/react";
+import { Button, Heading, HStack, Spacer, Stack } from "@chakra-ui/react";
 import axios from "axios";
+import Link from "next/link";
 import { MainLayout } from "layout/MainLayout";
 import Head from "next/head";
 import React from "react";
