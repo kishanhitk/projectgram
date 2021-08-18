@@ -9,6 +9,8 @@ import "@fontsource/poppins/700.css";
 import theme from "./../theme/index";
 import "nprogress/nprogress.css";
 import dynamic from "next/dynamic";
+import React from "react";
+import { Provider } from "next-auth/client";
 
 const TopProgressBar = dynamic(
   () => {
@@ -18,10 +20,12 @@ const TopProgressBar = dynamic(
 );
 function MyApp({ Component, pageProps }) {
   return (
-    <ChakraProvider theme={theme}>
-      <TopProgressBar />
-      <Component {...pageProps} />
-    </ChakraProvider>
+    <Provider session={pageProps.session}>
+      <ChakraProvider theme={theme}>
+        <TopProgressBar />
+        <Component {...pageProps} />
+      </ChakraProvider>
+    </Provider>
   );
 }
 
