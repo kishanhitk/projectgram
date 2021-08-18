@@ -13,4 +13,6 @@ export interface Project {
 }
 export interface User {
   firstName: string;
+  username: string;
+  bio:string
 }

@@ -95,7 +95,7 @@ export const Header = () => {
                 Login
               </NavLinkSolid>
             ) : (
-              <NextLink href={Routes.profile}>
+              <NextLink href={`/user/${userToken.username}`}>
                 <Avatar
                   name={userToken.username}
                   _hover={{ textDecor: "none",cursor:"pointer" }}

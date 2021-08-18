@@ -2,7 +2,7 @@ import { Avatar, Divider } from "@chakra-ui/react";
 import { Flex, Heading, HStack, Text, VStack } from "@chakra-ui/layout";
 import { Card } from "components/Card";
 import { MainLayout } from "layout";
-import React from "react";
+import React, { useEffect } from "react";
 import axios from "axios";
 import { BASE_URL } from "config";
 import { User } from "types/projects";
@@ -23,16 +23,28 @@ interface IProfilePageProps {
   user:User
 }
 const Profile = ({user}:IProfilePageProps) => {
-  
+  console.log(user);
+  const getAllUsers = async () => {
+    try {
+      const response = await axios.get(`${BASE_URL}/users/kishan/projects`);
+      console.log(response);
+    }
+    catch (error) {
+      console.log(error);
+    }
+  }
+  useEffect(()=>{
+     getAllUsers();
+  },[]);
   return (
     <MainLayout>
       <Card>
         <VStack justifyContent="center" alignItems="center">
           <Avatar size="2xl" name={user.firstName} marginRight="1.5" />
           <Flex justifyContent="center" flexDirection="column" alignItems="center">
-            <Heading p="1.5">KUMAR ANKUR</Heading>
-            <Text p="1">ReactJS developer</Text>
-            <Text p="1">@kumar_ank123</Text>
+            <Heading p="1.5">{ user.firstName}</Heading>
+            {user.bio?<Text p="1">{user.bio}</Text>:null}
+            <Text p="1">{ user.username}</Text>
           </Flex>
         </VStack>
       </Card>
@@ -56,7 +68,6 @@ export async function getServerSideProps(context) {
   const username = context.params.username;
   const res = await axios.get(`${BASE_URL}/users/${username}`);
   const user: User = await res.data;
-  console.log(BASE_URL);
   return {
     props: {
       user,
