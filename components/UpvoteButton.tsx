@@ -1,6 +1,7 @@
 import { Button, toast, useToast } from "@chakra-ui/react";
 import axios from "axios";
 import { BASE_URL } from "config";
+import { useSession } from "next-auth/client";
 import React, { useEffect } from "react";
 import { Project } from "types/projects";
 interface IUpvoteButtonProps {
@@ -10,17 +11,25 @@ function UpvoteButton({ project }: IUpvoteButtonProps) {
   const toast = useToast();
   const [upvoteButtonLoading, setUpvoteButtonLoading] = React.useState(false);
   const [upvoted, setUpvoted] = React.useState(true);
+  const [session, loading] = useSession();
 
   const checkIfUpvoted = async () => {
+    console.log(document.cookie);
+
     setUpvoteButtonLoading(true);
     const token = JSON.parse(window.localStorage.getItem("token"));
-    const res = await axios.get(`${BASE_URL}/projects/${project.slug}/upvote`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    console.log(res);
-    if (res.data) {
+    let res;
+    try {
+      res = await axios.get(`${BASE_URL}/projects/${project.slug}/upvote`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log(res);
+    } catch (e) {
+      console.log(e);
+    }
+    if (res?.data) {
       setUpvoted(true);
     } else {
       setUpvoted(false);

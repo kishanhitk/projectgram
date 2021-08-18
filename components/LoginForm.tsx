@@ -17,9 +17,7 @@ import jwt_decode from "jwt-decode";
 import { signIn, signOut, useSession } from "next-auth/client";
 
 function LoginForm(props: HTMLChakraProps<"form">) {
-  const [show, setShow] = React.useState(false);
-  const handleClick = () => setShow(!show);
-  const [username, setUsername] = React.useState("kishanhitk");
+  const [username, setUsername] = React.useState("acer");
   const [password, setPassword] = React.useState("1234");
   const [error, setError] = React.useState(null);
   const [isLoading, setIsLoading] = React.useState(false);
