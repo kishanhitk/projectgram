@@ -87,6 +87,7 @@ export default NextAuth({
           password: credentials.password,
         });
         const user = res.data.user;
+        user.firstName = res.data.user.firstName;
         // If no error and we have user data, return it
         if (res.status === 201 && user) {
           return user;

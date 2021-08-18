@@ -32,6 +32,7 @@ export const Header = () => {
   const { colorMode, toggleColorMode } = useColorMode();
   const [searchInput, setSearchInput] = React.useState("");
   const [session, loading] = useSession();
+  console.log(session?.user);
   return (
     <Flex
       as="header"
