@@ -18,4 +18,10 @@ declare module "next-auth" {
     lastName: string;
     access_token: string;
   }
+  interface User {
+    email: string;
+    firstName: string;
+    lastName: string;
+    access_token: string;
+  }
 }

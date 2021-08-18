@@ -10,37 +10,43 @@ interface IUpvoteButtonProps {
 function UpvoteButton({ project }: IUpvoteButtonProps) {
   const toast = useToast();
   const [upvoteButtonLoading, setUpvoteButtonLoading] = React.useState(false);
-  const [upvoted, setUpvoted] = React.useState(true);
+  const [upvoted, setUpvoted] = React.useState(false);
   const [session, loading] = useSession();
-
+  const [isUpvoteDisabled, setIsUpvoteDisabled] = React.useState(true);
   const checkIfUpvoted = async () => {
-    console.log(document.cookie);
-
-    setUpvoteButtonLoading(true);
-    const token = JSON.parse(window.localStorage.getItem("token"));
-    let res;
-    try {
-      res = await axios.get(`${BASE_URL}/projects/${project.slug}/upvote`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      console.log(res);
-    } catch (e) {
-      console.log(e);
+    if (loading) {
+      return;
     }
-    if (res?.data) {
-      setUpvoted(true);
-    } else {
-      setUpvoted(false);
+    if (session?.user) {
+      setIsUpvoteDisabled(false);
+      const token = session?.access_token;
+      console.log(document.cookie);
+
+      setUpvoteButtonLoading(true);
+      let res;
+      try {
+        res = await axios.get(`${BASE_URL}/projects/${project.slug}/upvote`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        console.log(res);
+      } catch (e) {
+        console.log(e);
+      }
+      if (res?.data) {
+        setUpvoted(true);
+      } else {
+        setUpvoted(false);
+      }
     }
     setUpvoteButtonLoading(false);
   };
   const upvoteProject = async () => {
     setUpvoteButtonLoading(true);
-    const token = JSON.parse(window.localStorage.getItem("token"));
-    console.log(token);
     try {
+      const token = session?.access_token;
+
       const res = await axios.put(
         `${BASE_URL}/projects/${project.slug}/upvote`,
         {},
@@ -72,9 +78,9 @@ function UpvoteButton({ project }: IUpvoteButtonProps) {
   };
   const deleteUpvote = async () => {
     setUpvoteButtonLoading(true);
-    const token = JSON.parse(window.localStorage.getItem("token"));
-    console.log(token);
     try {
+      const token = session?.access_token;
+
       const res = await axios.delete(
         `${BASE_URL}/projects/${project.slug}/upvote`,
         {
@@ -114,8 +120,9 @@ function UpvoteButton({ project }: IUpvoteButtonProps) {
       {upvoted ? (
         <Button
           variant="outline"
-          colorScheme="red"
+          colorScheme="green"
           onClick={deleteUpvote}
+          disabled={isUpvoteDisabled}
           isLoading={upvoteButtonLoading}
         >
           Downvote
@@ -123,6 +130,7 @@ function UpvoteButton({ project }: IUpvoteButtonProps) {
       ) : (
         <Button
           variant="solid"
+          disabled={isUpvoteDisabled}
           colorScheme="green"
           onClick={upvoteProject}
           isLoading={upvoteButtonLoading}

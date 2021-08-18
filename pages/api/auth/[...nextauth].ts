@@ -24,16 +24,10 @@ export default NextAuth({
     // Defaults to NextAuth.js secret if not explicitly specified.
     // This is used to generate the actual signingKey and produces a warning
     // message if not defined explicitly.
-    secret: "INp8IvdIyeMcoGAgFGoA61DdBglwwSqnXJZkgz8PSnw",
+    // secret: "INp8IvdIyeMcoGAgFGoA61DdBglwwSqnXJZkgz8PSnw",
     // You can generate a signing key using `jose newkey -s 512 -t oct -a HS512`
     // This gives you direct knowledge of the key used to sign the token so you can use it
     // to authenticate indirectly (eg. to a database driver)
-    signingKey: JSON.stringify({
-      kty: "oct",
-      kid: "Dl893BEV-iVE-x9EC52TDmlJUgGm9oZ99_ZL025Hc5Q",
-      alg: "HS512",
-      k: "K7QqRmJOKRK2qcCKV_pi9PSBv3XP0fpTu30TP8xn4w01xR3ZMZM38yL2DnTVPVw6e4yhdh0jtoah-i4c_pZagA",
-    }),
   },
   callbacks: {
     /**
@@ -55,7 +49,9 @@ export default NextAuth({
       return token;
     },
     async session(_, token) {
-      return { ..._, token };
+      const access_token = token.access_token;
+      // Add access_token to the token right after signin
+      return { ..._, access_token };
     },
   },
   pages: {
@@ -87,7 +83,9 @@ export default NextAuth({
           password: credentials.password,
         });
         const user = res.data.user;
-        user.firstName = res.data.user.firstName;
+        user.name = res.data.user.firstName;
+        user.access_token = res.data.user.access_token;
+        console.log(user);
         // If no error and we have user data, return it
         if (res.status === 201 && user) {
           return user;
