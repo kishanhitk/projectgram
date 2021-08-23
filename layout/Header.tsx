@@ -103,9 +103,9 @@ export const Header = () => {
                 Login
               </NavLinkSolid>
             ) : (
-              <NextLink href={`/user/${session.user.firstName}`}>
+              <NextLink href={`/user/${session.user.name}`}>
                 <Avatar
-                  name={session.user.firstName}
+                  name={session.user.name}
                   _hover={{ textDecor: "none", cursor: "pointer" }}
                 ></Avatar>
               </NextLink>
