@@ -19,18 +19,17 @@ import { Routes } from "config";
 import { SunIcon, MoonIcon, SearchIcon } from "@chakra-ui/icons";
 import { AuthService } from "services/auth.services";
 import { useRouter } from "next/router";
+import { signOut, useSession } from "next-auth/client";
+import { User } from "types/projects";
 interface NavLinkProps extends ButtonProps {
   url: string;
   children: ReactNode;
 }
 export const Header = () => {
   const router = useRouter();
-  const userToken: any = AuthService.getCurrentUser();
-  const isLoggedIn = userToken !== null;
   const { colorMode, toggleColorMode } = useColorMode();
-  console.log(userToken);
   const [searchInput, setSearchInput] = React.useState("");
-
+  const [session, loading] = useSession();
   return (
     <Flex
       as="header"
@@ -53,7 +52,7 @@ export const Header = () => {
     >
       <Box as="nav">
         <HStack spacing={5}>
-          <NextLink href={Routes.home}>
+          <NextLink href={Routes.home} passHref>
             <Link _hover={{ textDecor: "none" }}>
               <Avatar name="Project Gram"></Avatar>
             </Link>
@@ -80,37 +79,33 @@ export const Header = () => {
               ></Input>
             </InputGroup>
           </form>
-          <NextLink href={Routes.home}>
-            <NavLink url={Routes.about}>About</NavLink>
-          </NextLink>
+          <NavLink url={Routes.about}>About</NavLink>
         </HStack>
       </Box>
       {/* Nav */}
       <Box as="nav">
         <HStack>
           <HStack>
-            {isLoggedIn && (
+            {session && (
               <NavLink key="new" url={Routes.submitNewProject}>
                 Submit Project 🚀
               </NavLink>
             )}
-            {isLoggedIn && (
+            {session && (
               <Button
                 onClick={() => {
-                  AuthService.logout();
-                  window.location.reload();
+                  signOut();
                 }}
               >
                 LogOut{" "}
               </Button>
             )}
-            {!isLoggedIn ? (
+            {!session && (
               <NavLinkSolid key="login" url={Routes.login}>
                 Login
               </NavLinkSolid>
-            ) : (
-              <Avatar name={userToken.username}></Avatar>
             )}
+            {session && <Avatar name={session.user.email}></Avatar>}
           </HStack>
           <IconButton
             onClick={toggleColorMode}
