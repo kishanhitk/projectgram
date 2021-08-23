@@ -1,4 +1,5 @@
-import firebase from "firebase";
+import firebase from "firebase/app";
+import "firebase/storage";
 import { useState, useEffect } from "react";
 
 const useStorage = (file) => {
@@ -7,7 +8,7 @@ const useStorage = (file) => {
   const [error, seterror] = useState(null);
   useEffect(() => {
     if (file != null) {
-      //! Don't use filename as it is not unique 
+      //! Don't use filename as it is not unique
       const storageRef = firebase.storage().ref(file.name);
       storageRef.put(file).on(
         "state-changed",
