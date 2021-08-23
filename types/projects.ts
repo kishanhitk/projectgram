@@ -4,7 +4,8 @@ export interface Project {
   shortDescription: string;
   longDescription: string;
   slug: string;
-  images: string[];
+  bannerImage: string;
+  screenshots: string[];
   souceLink: string;
   website: string;
   upvote_count: number;

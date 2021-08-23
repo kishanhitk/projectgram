@@ -2,34 +2,22 @@ import {
   Box,
   Button,
   Center,
+  CircularProgress,
   Heading,
-  SimpleGrid,
-  useColorModeValue,
-  VisuallyHidden,
-  Text,
 } from "@chakra-ui/react";
 import { MainLayout } from "layout";
-import { Header } from "layout/Header";
-import { useRouter } from "next/dist/client/router";
-import { AuthService } from "services/auth.services";
-import Router from "next/router";
 import Link from "next/link";
 import React from "react";
 import { Card } from "components/Card";
-import { DividerWithText } from "components/DividerWIthText";
-import LoginForm from "components/LoginForm";
 import Logo from "components/Logo";
-import { TextLink } from "components/TextLink";
-import { FaFacebook, FaGoogle, FaGithub } from "react-icons/fa";
 import ProjectSubmissionForm from "components/ProjectSubmissionForm";
 import firebaseClient from "config/firebase";
+import { useSession } from "next-auth/client";
 
 function SubmitProject() {
-  const userToken = AuthService.getCurrentUser();
-  const router = useRouter();
-  const boxBGcolor = useColorModeValue("gray.50", "inherit");
-
-  if (!userToken) {
+  const [session, loading] = useSession();
+  if (loading) return <CircularProgress />;
+  if (!session) {
     return (
       <MainLayout>
         <Heading>Please Login</Heading>
@@ -66,11 +54,3 @@ function SubmitProject() {
 }
 
 export default SubmitProject;
-
-export async function getServerSideProps(context) {
-  if (typeof window !== "undefined")
-    console.log(window.localStorage.getItem("token"));
-  return {
-    props: {}, // will be passed to the page component as props
-  };
-}

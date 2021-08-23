@@ -6,7 +6,7 @@ export const TextLink = (props: HTMLChakraProps<"a">) => (
   <Link href={props.href} passHref>
     <chakra.a
       marginStart="1"
-      href="#"
+      href={props.href}
       color={useColorModeValue("blue.500", "blue.200")}
       _hover={{ color: useColorModeValue("blue.600", "blue.300") }}
       display={{ base: "block", sm: "inline" }}

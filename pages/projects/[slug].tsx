@@ -14,27 +14,14 @@ function ProjectPage({ project }: IProjectPageProps) {
   return (
     <MainLayout>
       <HStack justify="flex-start" align="flex-start" spacing={10}>
-        {project.images ? (
-          <Img
-            width="100px"
-            height="100px"
-            fit="fill"
-            rounded={5}
-            alt={project.title}
-            src={project.images[0]}
-          ></Img>
-        ) : (
-          <Link href={`/projects/${project.slug}`} passHref>
-            <Img
-              width="100px"
-              height="100px"
-              fit="fill"
-              rounded={5}
-              alt={project.title}
-              src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1052&q=80"
-            ></Img>
-          </Link>
-        )}
+        <Img
+          width="100px"
+          height="100px"
+          fit="fill"
+          rounded={5}
+          alt={project.title}
+          src={project.bannerImage}
+        ></Img>
         <VStack align="flex-start" spacing={1}>
           <Heading>{project.title}</Heading>
           <Text>{project.shortDescription}</Text>

@@ -1,5 +1,6 @@
 import { Button, Heading, HStack, Spacer, Stack } from "@chakra-ui/react";
 import axios from "axios";
+import Link from "next/link";
 import { MainLayout } from "layout/MainLayout";
 import Head from "next/head";
 import React from "react";
@@ -20,8 +21,12 @@ export default function Home({ projects }: IHomePageProps) {
       <HStack>
         <Heading>Top Projects</Heading>
         <Spacer />
-        <Button variant="ghost">New</Button>
-        <Button variant="ghost">Trending</Button>
+        <Link href="/latest" passHref>
+          <Button variant="ghost">Latest</Button>
+        </Link>
+        <Link href="/trending" passHref>
+          <Button variant="ghost">Trending</Button>
+        </Link>
       </HStack>
       <Stack mt={10}>
         {projects.map((project) => (
@@ -34,7 +39,7 @@ export default function Home({ projects }: IHomePageProps) {
 
 // Get Server Side Props
 export async function getServerSideProps(context) {
-  const res = await axios.get(`${BASE_URL}/projects`);
+  const res = await axios.get(`${BASE_URL}/projects?sortBy=popular`);
   const projects: Project[] = await res.data;
   return {
     props: {

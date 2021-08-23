@@ -1,11 +1,4 @@
-import {
-  useColorModeValue,
-  Stack,
-  Heading,
-  Image,
-  Text,
-  Img,
-} from "@chakra-ui/react";
+import { useColorModeValue, Stack, Heading, Text, Img } from "@chakra-ui/react";
 import React from "react";
 import { Project } from "types/projects";
 import Link from "next/link";
@@ -14,10 +7,9 @@ interface IProjectDisplayCardProps {
 }
 function ProjectDisplayCard({ project }: IProjectDisplayCardProps) {
   const boxBGcolor = useColorModeValue("gray.100", "gray.700");
-
   return (
     <Stack my={7} bgColor={boxBGcolor} p={5} rounded={5} cursor="pointer">
-      {project.images ? (
+      {project.bannerImage ? (
         <Link href={`/projects/${project.slug}`} passHref>
           <Img
             width="100%"
@@ -25,7 +17,7 @@ function ProjectDisplayCard({ project }: IProjectDisplayCardProps) {
             fit="fill"
             rounded={5}
             alt={project.title}
-            src={project.images[0]}
+            src={project.bannerImage}
           ></Img>
         </Link>
       ) : (

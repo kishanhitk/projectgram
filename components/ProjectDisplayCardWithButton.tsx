@@ -2,7 +2,6 @@ import {
   useColorModeValue,
   Stack,
   Heading,
-  Image,
   Text,
   Img,
   HStack,
@@ -11,6 +10,7 @@ import {
 import React from "react";
 import { Project } from "types/projects";
 import Link from "next/link";
+import UpvoteButton from "./UpvoteButton";
 interface IProjectDisplayCardProps {
   project: Project;
 }
@@ -19,7 +19,7 @@ function ProjectDisplayCardWithButtons({ project }: IProjectDisplayCardProps) {
 
   return (
     <Stack my={7} bgColor={boxBGcolor} p={5} rounded={5} spacing={3}>
-      {project.images ? (
+      {project.bannerImage ? (
         <Link href={`/projects/${project.slug}`} passHref>
           <Img
             width="100%"
@@ -27,7 +27,7 @@ function ProjectDisplayCardWithButtons({ project }: IProjectDisplayCardProps) {
             fit="fill"
             rounded={5}
             alt={project.title}
-            src={project.images[0]}
+            src={project.bannerImage}
           ></Img>
         </Link>
       ) : (
@@ -46,9 +46,12 @@ function ProjectDisplayCardWithButtons({ project }: IProjectDisplayCardProps) {
         <Heading textDecoration="none" fontSize="3xl">
           {project.title}
         </Heading>
-        <Button variant="solid" colorScheme="messenger">
-          Try it
-        </Button>
+        <HStack>
+          <Button variant="solid" colorScheme="messenger">
+            Try it
+          </Button>
+          <UpvoteButton project={project} />
+        </HStack>
       </HStack>
       <Text fontSize="lg">{project.shortDescription}</Text>
       <Text fontSize="sm">{project.longDescription}</Text>
