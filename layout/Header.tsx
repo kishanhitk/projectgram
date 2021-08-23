@@ -110,7 +110,6 @@ export const Header = () => {
                 ></Avatar>
               </NextLink>
             )}
-            {session && <Avatar name={session.user.email}></Avatar>}
           </HStack>
           <IconButton
             onClick={toggleColorMode}
