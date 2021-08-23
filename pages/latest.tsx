@@ -1,11 +1,7 @@
-import { Button, Heading, HStack, Spacer, Stack } from "@chakra-ui/react";
 import axios from "axios";
-import { MainLayout } from "layout/MainLayout";
-import Head from "next/head";
 import React from "react";
 import { Project } from "types/projects";
 import { BASE_URL } from "config";
-import ProjectDisplayCard from "components/ProjectDisplayCard";
 import HomePage from "components/HomePage";
 import { Filters } from "config/filters";
 interface IHomePageProps {

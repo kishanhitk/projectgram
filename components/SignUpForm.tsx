@@ -14,11 +14,9 @@ import { BASE_URL } from "config";
 import { useRouter } from "next/router";
 import * as React from "react";
 import { PasswordField } from "./PasswordField";
-import jwt_decode from "jwt-decode";
 
 function SignUpForm(props: HTMLChakraProps<"form">) {
   const [show, setShow] = React.useState(false);
-  const handleClick = () => setShow(!show);
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [error, setError] = React.useState(null);
@@ -34,7 +32,6 @@ function SignUpForm(props: HTMLChakraProps<"form">) {
         console.log(username);
         setIsLoading(true);
         try {
-          //   AuthService.login(username, password);
           const res = await axios.post(`${BASE_URL}/users`, {
             firstName,
             email,
@@ -42,7 +39,6 @@ function SignUpForm(props: HTMLChakraProps<"form">) {
             username,
             password,
           });
-          console.log(res.data);
           router.replace("/login");
         } catch (error) {
           console.log(error);

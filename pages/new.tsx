@@ -1,17 +1,23 @@
-import { Box, Button, Center, Heading } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Center,
+  CircularProgress,
+  Heading,
+} from "@chakra-ui/react";
 import { MainLayout } from "layout";
-import { AuthService } from "services/auth.services";
 import Link from "next/link";
 import React from "react";
 import { Card } from "components/Card";
 import Logo from "components/Logo";
 import ProjectSubmissionForm from "components/ProjectSubmissionForm";
 import firebaseClient from "config/firebase";
+import { useSession } from "next-auth/client";
 
 function SubmitProject() {
-  const userToken = AuthService.getCurrentUser();
-
-  if (!userToken) {
+  const [session, loading] = useSession();
+  if (loading) return <CircularProgress />;
+  if (!session) {
     return (
       <MainLayout>
         <Heading>Please Login</Heading>

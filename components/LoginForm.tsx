@@ -8,13 +8,10 @@ import {
   Input,
   Stack,
 } from "@chakra-ui/react";
-import axios from "axios";
-import { BASE_URL } from "config";
 import { useRouter } from "next/router";
 import * as React from "react";
 import { PasswordField } from "./PasswordField";
-import jwt_decode from "jwt-decode";
-import { signIn, signOut, useSession } from "next-auth/client";
+import { signIn } from "next-auth/client";
 
 function LoginForm(props: HTMLChakraProps<"form">) {
   const [username, setUsername] = React.useState("acer");
@@ -28,7 +25,6 @@ function LoginForm(props: HTMLChakraProps<"form">) {
       onSubmit={async (e) => {
         e.preventDefault();
         setIsLoading(true);
-
         try {
           const res = await signIn("credentials", {
             username: username,
@@ -36,7 +32,6 @@ function LoginForm(props: HTMLChakraProps<"form">) {
             callbackUrl: "/",
             redirect: false,
           });
-          console.log(res);
           if (res.error === null) {
             router.replace("/");
           }
@@ -44,30 +39,10 @@ function LoginForm(props: HTMLChakraProps<"form">) {
             setError("Invalid username or password");
           }
         } catch (error) {
-          console.log(error);
           setError(error.response.data.message);
+        } finally {
+          setIsLoading(false);
         }
-        setIsLoading(false);
-
-        return;
-        // setIsLoading(true);
-        // try {
-        //   //   AuthService.login(username, password);
-        //   const res = await axios.post(`${BASE_URL}/auth/login`, {
-        //     username,
-        //     password,
-        //   });
-        //   const token = res.data.access_token;
-        //   window.localStorage.setItem("token", JSON.stringify(token));
-        //   var decoded: any = jwt_decode(token);
-        //   window.localStorage.setItem("username", decoded.username);
-        //   console.log(decoded);
-        //   router.replace("/");
-        // } catch (error) {
-        //   console.log(error);
-        //   setError(error.response.data.message);
-        // }
-        // setIsLoading(false);
       }}
       {...props}
     >
@@ -90,7 +65,6 @@ function LoginForm(props: HTMLChakraProps<"form">) {
         <Button
           isLoading={isLoading}
           type="submit"
-          // onClick={signIn}
           colorScheme="blue"
           size="lg"
           fontSize="md"

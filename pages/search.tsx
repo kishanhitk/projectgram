@@ -1,5 +1,5 @@
 import { Button } from "@chakra-ui/button";
-import { Heading, VStack, Text } from "@chakra-ui/layout";
+import { VStack, Text } from "@chakra-ui/layout";
 import axios from "axios";
 import ProjectDisplayCard from "components/ProjectDisplayCard";
 import { BASE_URL } from "config";

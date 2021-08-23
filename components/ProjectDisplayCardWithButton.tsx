@@ -2,7 +2,6 @@ import {
   useColorModeValue,
   Stack,
   Heading,
-  Image,
   Text,
   Img,
   HStack,
@@ -11,19 +10,12 @@ import {
 import React from "react";
 import { Project } from "types/projects";
 import Link from "next/link";
-import axios from "axios";
-import { BASE_URL } from "config";
-import { useToast } from "@chakra-ui/react";
 import UpvoteButton from "./UpvoteButton";
 interface IProjectDisplayCardProps {
   project: Project;
 }
 function ProjectDisplayCardWithButtons({ project }: IProjectDisplayCardProps) {
-  const toast = useToast();
-  const [upvoteButtonLoading, setUpvoteButtonLoading] = React.useState(false);
   const boxBGcolor = useColorModeValue("gray.100", "gray.700");
-
-
 
   return (
     <Stack my={7} bgColor={boxBGcolor} p={5} rounded={5} spacing={3}>

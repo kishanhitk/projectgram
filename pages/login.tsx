@@ -1,5 +1,4 @@
 import {
-  Avatar,
   Box,
   Button,
   Center,
@@ -15,11 +14,9 @@ import { TextLink } from "components/TextLink";
 import LoginForm from "components/LoginForm";
 import * as React from "react";
 import { FaFacebook, FaGithub, FaGoogle } from "react-icons/fa";
-import Link from "next/link";
 import Logo from "components/Logo";
-import { getCsrfToken } from "next-auth/client";
 
-const Login = ({ csrfToken }) => {
+const Login = () => {
   return (
     <Box
       bg={useColorModeValue("gray.50", "inherit")}
@@ -61,10 +58,3 @@ const Login = ({ csrfToken }) => {
   );
 };
 export default Login;
-export async function getServerSideProps(context) {
-  return {
-    props: {
-      csrfToken: await getCsrfToken(context),
-    },
-  };
-}

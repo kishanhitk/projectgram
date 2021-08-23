@@ -7,47 +7,36 @@ import {
   FormLabel,
   HTMLChakraProps,
   Icon,
-  Img,
   Input,
   InputGroup,
   InputLeftElement,
   Stack,
-  Text,
   Image,
   Textarea,
-  HStack,
 } from "@chakra-ui/react";
 import axios from "axios";
 import { BASE_URL } from "config";
 import { useRouter } from "next/router";
 import * as React from "react";
-import { PasswordField } from "./PasswordField";
-import jwt_decode from "jwt-decode";
-import { FaWindows } from "react-icons/fa";
-import UploadInput from "./UploadInput";
 import useStorage from "hooks/useStorage";
 import { FiFile } from "react-icons/fi";
 import { ImCross } from "react-icons/im";
+import { useSession } from "next-auth/client";
 
 function ProjectSubmissionForm(props: HTMLChakraProps<"form">) {
+  const [session, loading] = useSession();
+  const router = useRouter();
+  const [isLoading, setIsLoading] = React.useState(false);
   const [title, setTitle] = React.useState("");
   const [shortDescription, setShortDescription] = React.useState("");
   const [longDescription, setLongDescription] = React.useState("");
-  const [error, setError] = React.useState(null);
-  const [isLoading, setIsLoading] = React.useState(false);
-  const router = useRouter();
   const [file, setFile] = React.useState(null);
-  const inputRef = React.useRef<HTMLInputElement>();
-  const { url, progress } = useStorage(file);
   const [imageUrl, setImageUrl] = React.useState(null);
   const [liveUrl, setLiveUrl] = React.useState(null);
   const [sourceCode, setSourceCode] = React.useState(null);
-  // React.useEffect(() => {
-  //   if (url) {
-  //     setFile(null);
-  //   }
-  // }, [url, setFile]);
-
+  const [error, setError] = React.useState(null);
+  const { url, progress } = useStorage(file);
+  const inputRef = React.useRef<HTMLInputElement>();
   return (
     <chakra.form
       onSubmit={async (e) => {
@@ -55,9 +44,7 @@ function ProjectSubmissionForm(props: HTMLChakraProps<"form">) {
         console.log(title);
         setIsLoading(true);
         try {
-          const token = JSON.parse(window.localStorage.getItem("token"));
-          //   AuthService.login(username, password);
-          console.log(token);
+          const token = session.access_token;
           const res = await axios.post(
             `${BASE_URL}/projects`,
             {
@@ -74,7 +61,6 @@ function ProjectSubmissionForm(props: HTMLChakraProps<"form">) {
           );
           router.replace("/");
         } catch (error) {
-          console.log(error);
           setError(error.response.data.message);
         }
         setIsLoading(false);
@@ -91,7 +77,6 @@ function ProjectSubmissionForm(props: HTMLChakraProps<"form">) {
             onChange={(e) => setTitle(e.target.value)}
           />
         </FormControl>
-        {/* <UploadInput /> */}
         <FormControl>
           <FormLabel>Tweet size description of your project</FormLabel>
           <Input
@@ -121,7 +106,6 @@ function ProjectSubmissionForm(props: HTMLChakraProps<"form">) {
             <input
               type="file"
               ref={inputRef}
-              // inputRef={ref}
               style={{ display: "none" }}
               onChange={(e) => {
                 const selectedFile = e.target.files[0];
