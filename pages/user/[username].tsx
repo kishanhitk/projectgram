@@ -1,33 +1,30 @@
-import { Avatar, Divider } from "@chakra-ui/react";
-import { Flex, Heading, HStack, Text, VStack } from "@chakra-ui/layout";
+import {
+  Avatar,
+  Divider,
+  SkeletonCircle,
+  SkeletonText,
+} from "@chakra-ui/react";
+import { Box, Flex, Heading, Text, VStack } from "@chakra-ui/layout";
 import { Card } from "components/Card";
 import { MainLayout } from "layout";
 import React, { useEffect } from "react";
 import axios from "axios";
 import { BASE_URL } from "config";
-import { User } from "types/projects";
-
-const DUMMY_DATA = [
-  { Desc: "This is my project" },
-  { Desc: "This is my project" },
-  { Desc: "This is my project" },
-  { Desc: "This is my project" },
-  { Desc: "This is my project" },
-  { Desc: "This is my project" },
-  { Desc: "This is my project" },
-  { Desc: "This is my project" },
-  { Desc: "This is my project" },
-];
+import { Project, User } from "types/projects";
+import ProjectDisplayCard from "components/ProjectDisplayCard";
 
 interface IProfilePageProps {
   user: User;
 }
 const Profile = ({ user }: IProfilePageProps) => {
-  console.log(user);
+  const [userProjects, setUserProjects] = React.useState<Project[]>([]);
   const getAllUsers = async () => {
     try {
-      const response = await axios.get(`${BASE_URL}/users/kishan/projects`);
+      const response = await axios.get(
+        `${BASE_URL}/users/${user.username}/projects`
+      );
       console.log(response);
+      setUserProjects(response.data);
     } catch (error) {
       console.log(error);
     }
@@ -35,6 +32,7 @@ const Profile = ({ user }: IProfilePageProps) => {
   useEffect(() => {
     getAllUsers();
   }, []);
+
   return (
     <MainLayout>
       <Card>
@@ -51,13 +49,24 @@ const Profile = ({ user }: IProfilePageProps) => {
           </Flex>
         </VStack>
       </Card>
-      {DUMMY_DATA.map((item, index) => {
-        return (
-          <Card marginTop="2" key={index} rounded="sm">
-            {item.Desc}
-          </Card>
-        );
-      })}
+      <Divider height={5} />
+      <Text textAlign="center" mt={10} fontSize="2xl">
+        Projects by {user.firstName}
+      </Text>
+      {userProjects.length === 0 &&
+        Array(5).map((item, index) => {
+          return (
+            <Box padding="6" boxShadow="lg" key={item}>
+              <SkeletonCircle size="10" />
+              <SkeletonText mt="4" noOfLines={4} spacing="4" />
+            </Box>
+          );
+        })}
+      {userProjects &&
+        userProjects.length > 0 &&
+        userProjects.map((item, index) => {
+          return <ProjectDisplayCard key={index} project={item} />;
+        })}
     </MainLayout>
   );
 };
@@ -68,6 +77,14 @@ export async function getServerSideProps(context) {
   const username = context.params.username;
   const res = await axios.get(`${BASE_URL}/users/${username}`);
   const user: User = await res.data;
+  if (!user) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
   return {
     props: {
       user,
