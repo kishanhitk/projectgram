@@ -32,7 +32,7 @@ const Profile = ({ user }: IProfilePageProps) => {
   useEffect(() => {
     getAllUsers();
   }, []);
-
+  console.log(userProjects.length === 0);
   return (
     <MainLayout>
       <Card>
@@ -54,7 +54,7 @@ const Profile = ({ user }: IProfilePageProps) => {
         Projects by {user.firstName}
       </Text>
       {userProjects.length === 0 &&
-        Array(5).map((item, index) => {
+        [1, 2, 3, 4].map((item) => {
           return (
             <Box padding="6" boxShadow="lg" key={item}>
               <SkeletonCircle size="10" />
