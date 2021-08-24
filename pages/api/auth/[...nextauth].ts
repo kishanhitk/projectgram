@@ -84,6 +84,7 @@ export default NextAuth({
         });
         const user = res.data.user;
         user.name = res.data.user.username;
+        user.image = res.data.user.avatar.url;
         user.access_token = res.data.user.access_token;
         console.log(user);
         // If no error and we have user data, return it

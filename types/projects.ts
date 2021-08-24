@@ -15,5 +15,10 @@ export interface Project {
 export interface User {
   firstName: string;
   username: string;
-  bio:string
+  bio: string;
+  avatar: PublicFile;
+}
+export interface PublicFile {
+  url: string;
+  key: string;
 }

@@ -37,7 +37,12 @@ const Profile = ({ user }: IProfilePageProps) => {
     <MainLayout>
       <Card>
         <VStack justifyContent="center" alignItems="center">
-          <Avatar size="2xl" name={user.firstName} marginRight="1.5" />
+          <Avatar
+            size="2xl"
+            name={user.firstName}
+            src={user.avatar?.url}
+            marginRight="1.5"
+          />
           <Flex
             justifyContent="center"
             flexDirection="column"

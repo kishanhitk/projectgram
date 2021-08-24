@@ -105,6 +105,7 @@ export const Header = () => {
             ) : (
               <NextLink href={`/user/${session.user.name}`} passHref>
                 <Avatar
+                  src={session.user?.image}
                   name={session.user.name}
                   _hover={{ textDecor: "none", cursor: "pointer" }}
                 ></Avatar>
