@@ -1,21 +1,12 @@
-import {
-  Button,
-  Heading,
-  HStack,
-  Skeleton,
-  Text,
-  SkeletonCircle,
-  SkeletonText,
-  Spacer,
-  Stack,
-} from "@chakra-ui/react";
+import { Button, Heading, HStack, Spacer, Stack } from "@chakra-ui/react";
 import axios from "axios";
+import Link from "next/link";
 import { MainLayout } from "layout/MainLayout";
 import Head from "next/head";
 import React from "react";
 import { Project } from "types/projects";
-import Link from "next/link";
 import { BASE_URL } from "config";
+import ProjectDisplayCard from "components/ProjectDisplayCard";
 interface IHomePageProps {
   projects: Project[];
 }
@@ -30,25 +21,16 @@ export default function Home({ projects }: IHomePageProps) {
       <HStack>
         <Heading>Top Projects</Heading>
         <Spacer />
-        <Button variant="ghost">New</Button>
-        <Button variant="ghost">Trending</Button>
+        <Link href="/latest" passHref>
+          <Button variant="ghost">Latest</Button>
+        </Link>
+        <Link href="/trending" passHref>
+          <Button variant="ghost">Trending</Button>
+        </Link>
       </HStack>
       <Stack mt={10}>
         {projects.map((project) => (
-          <Link key={project.id} passHref href={project.slug}>
-            <Stack my={7} cursor="pointer">
-              <SkeletonCircle size="20" />
-              <Heading fontSize="xl" fontweight="normal">
-                {project.title}
-              </Heading>
-              <Text color="gray" fontSize="lg">
-                {project.shortDescription}
-              </Text>
-              <Text color="gray" fontSize="sm">
-                {project.longDescription}
-              </Text>
-            </Stack>
-          </Link>
+          <ProjectDisplayCard key={project.slug} project={project} />
         ))}
       </Stack>
     </MainLayout>
@@ -57,7 +39,7 @@ export default function Home({ projects }: IHomePageProps) {
 
 // Get Server Side Props
 export async function getServerSideProps(context) {
-  const res = await axios.get(`${BASE_URL}/projects`);
+  const res = await axios.get(`${BASE_URL}/projects?sortBy=popular`);
   const projects: Project[] = await res.data;
   return {
     props: {

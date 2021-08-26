@@ -17,13 +17,17 @@ import {
 } from "@chakra-ui/react";
 import { Routes } from "config";
 import { SunIcon, MoonIcon, SearchIcon } from "@chakra-ui/icons";
+import { useRouter } from "next/router";
+import { signOut, useSession } from "next-auth/client";
 interface NavLinkProps extends ButtonProps {
   url: string;
   children: ReactNode;
 }
 export const Header = () => {
+  const router = useRouter();
   const { colorMode, toggleColorMode } = useColorMode();
-
+  const [searchInput, setSearchInput] = React.useState("");
+  const [session, loading] = useSession();
   return (
     <Flex
       as="header"
@@ -44,35 +48,69 @@ export const Header = () => {
         transition: "background-color 0.1 ease-in-out",
       }}
     >
-      <Box>
+      <Box as="nav">
         <HStack spacing={5}>
-          <NextLink href={Routes.home}>
+          <NextLink href={Routes.home} passHref>
             <Link _hover={{ textDecor: "none" }}>
               <Avatar name="Project Gram"></Avatar>
             </Link>
           </NextLink>
-          <InputGroup>
-            <InputLeftElement
-              pointerEvents="none"
-              color="gray.300"
-              fontSize="1.2em"
-              // eslint-disable-next-line react/no-children-prop
-              children={<SearchIcon color="gray.300" />}
-            />
-            <Input variant="filled" placeholder="Search"></Input>
-          </InputGroup>
-          <NextLink href={Routes.home}>
-            <NavLink url={Routes.about}>About</NavLink>
-          </NextLink>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              router.push(`/search?q=${searchInput}`);
+            }}
+          >
+            <InputGroup>
+              <InputLeftElement
+                pointerEvents="none"
+                color="gray.300"
+                fontSize="1.2em"
+                // eslint-disable-next-line react/no-children-prop
+                children={<SearchIcon color="gray.300" />}
+              />
+              <Input
+                variant="filled"
+                placeholder="Search"
+                value={searchInput}
+                onChange={(e) => setSearchInput(e.target.value)}
+              ></Input>
+            </InputGroup>
+          </form>
+          <NavLink url={Routes.about}>About</NavLink>
         </HStack>
       </Box>
-
       {/* Nav */}
       <Box as="nav">
         <HStack>
           <HStack>
-            <NavLink url={Routes.submitNewProject}>Submit Project 🚀</NavLink>
-            <NavLinkSolid url={Routes.login}>Login</NavLinkSolid>
+            {session && (
+              <NavLink key="new" url={Routes.submitNewProject}>
+                Submit Project 🚀
+              </NavLink>
+            )}
+            {session && (
+              <Button
+                onClick={() => {
+                  signOut();
+                }}
+              >
+                LogOut{" "}
+              </Button>
+            )}
+            {!session ? (
+              <NavLinkSolid key="login" url={Routes.login}>
+                Login
+              </NavLinkSolid>
+            ) : (
+              <NextLink href={`/user/${session.user.name}`} passHref>
+                <Avatar
+                  src={session.user?.image}
+                  name={session.user.name}
+                  _hover={{ textDecor: "none", cursor: "pointer" }}
+                ></Avatar>
+              </NextLink>
+            )}
           </HStack>
           <IconButton
             onClick={toggleColorMode}
