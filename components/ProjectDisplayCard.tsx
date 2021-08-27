@@ -16,6 +16,7 @@ function ProjectDisplayCard({ project }: IProjectDisplayCardProps) {
   return (
     <VStack
       bgColor={boxBGcolor}
+      width="100%"
       p={5}
       rounded="lg"
       cursor="pointer"
