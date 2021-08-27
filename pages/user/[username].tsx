@@ -1,23 +1,21 @@
-import {
-  Avatar,
-  Divider,
-  SkeletonCircle,
-  SkeletonText,
-} from "@chakra-ui/react";
+import { Avatar, Button, SkeletonCircle, SkeletonText } from "@chakra-ui/react";
 import { Box, Flex, Heading, Text, VStack } from "@chakra-ui/layout";
 import { Card } from "components/Card";
 import { MainLayout } from "layout";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { BASE_URL } from "config";
 import { Project, User } from "types/projects";
 import ProjectDisplayCard from "components/ProjectDisplayCard";
+import { signOut, useSession } from "next-auth/client";
 
 interface IProfilePageProps {
   user: User;
 }
 const Profile = ({ user }: IProfilePageProps) => {
+  const [isSelf, setIsSelf] = useState(false);
   const [userProjects, setUserProjects] = React.useState<Project[]>([]);
+  const [session, loading] = useSession();
   const getAllUsers = async () => {
     try {
       const response = await axios.get(
@@ -55,6 +53,18 @@ const Profile = ({ user }: IProfilePageProps) => {
             <Heading p="1.5">{user.firstName}</Heading>
             {user.bio ? <Text p="1">{user.bio}</Text> : null}
             <Text p="1">@{user.username}</Text>
+            {!loading && session?.user?.name === user.username && (
+              <Button
+                m={4}
+                colorScheme="red"
+                variant="ghost"
+                onClick={() => {
+                  signOut();
+                }}
+              >
+                Logout
+              </Button>
+            )}
           </Flex>
         </VStack>
       </Card>
