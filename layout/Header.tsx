@@ -41,8 +41,8 @@ export const Header = () => {
       paddingX={10}
       top="0"
       zIndex={10}
-      boxShadow="md"
-      bg={useColorModeValue("rgba(255, 255, 255, 0.5)", "rgba(26, 32, 44,0.8)")}
+      borderBottom="1px solid rgba(33,41,63,.1)"
+      bg={useColorModeValue("rgba(255, 250, 250, 0.5)", "rgba(26, 32, 44,0.8)")}
       style={{
         backdropFilter: `saturate(180%) blur(10px)`,
         transition: "background-color 0.1 ease-in-out",

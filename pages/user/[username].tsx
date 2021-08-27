@@ -54,28 +54,29 @@ const Profile = ({ user }: IProfilePageProps) => {
           >
             <Heading p="1.5">{user.firstName}</Heading>
             {user.bio ? <Text p="1">{user.bio}</Text> : null}
-            <Text p="1">{user.username}</Text>
+            <Text p="1">@{user.username}</Text>
           </Flex>
         </VStack>
       </Card>
-      <Divider height={5} />
-      <Text textAlign="center" mt={10} fontSize="2xl">
+      <Text textAlign="center" m={10} fontSize="3xl">
         Projects by {user.firstName}
       </Text>
-      {userProjects.length === 0 &&
-        [1, 2, 3, 4].map((item) => {
-          return (
-            <Box padding="6" boxShadow="lg" key={item}>
-              <SkeletonCircle size="10" />
-              <SkeletonText mt="4" noOfLines={4} spacing="4" />
-            </Box>
-          );
-        })}
-      {userProjects &&
-        userProjects.length > 0 &&
-        userProjects.map((item, index) => {
-          return <ProjectDisplayCard key={index} project={item} />;
-        })}
+      <VStack spacing={10}>
+        {userProjects.length === 0 &&
+          [1, 2, 3, 4].map((item) => {
+            return (
+              <Box padding="6" boxShadow="lg" key={item}>
+                <SkeletonCircle size="10" />
+                <SkeletonText mt="4" noOfLines={4} spacing="4" />
+              </Box>
+            );
+          })}
+        {userProjects &&
+          userProjects.length > 0 &&
+          userProjects.map((item, index) => {
+            return <ProjectDisplayCard key={index} project={item} />;
+          })}
+      </VStack>
     </MainLayout>
   );
 };

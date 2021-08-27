@@ -4,7 +4,7 @@ export interface Project {
   shortDescription: string;
   longDescription: string;
   slug: string;
-  bannerImage: string;
+  bannerImage: PublicFile;
   screenshots: string[];
   souceLink: string;
   website: string;

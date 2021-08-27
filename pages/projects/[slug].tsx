@@ -20,7 +20,7 @@ function ProjectPage({ project }: IProjectPageProps) {
           fit="fill"
           rounded={5}
           alt={project.title}
-          src={project.bannerImage}
+          src={project.bannerImage.url}
         ></Img>
         <VStack align="flex-start" spacing={1}>
           <Heading>{project.title}</Heading>
