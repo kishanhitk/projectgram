@@ -31,6 +31,7 @@ const Profile = ({ user }: IProfilePageProps) => {
   };
   useEffect(() => {
     getAllUsers();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   console.log(userProjects.length === 0);
   return (
@@ -40,7 +41,10 @@ const Profile = ({ user }: IProfilePageProps) => {
           <Avatar
             size="2xl"
             name={user.firstName}
-            src={user.avatar?.url}
+            src={
+              user.avatar?.url ??
+              `https://avatars.dicebear.com/api/jdenticon/${user.username}.svg`
+            }
             marginRight="1.5"
           />
           <Flex
