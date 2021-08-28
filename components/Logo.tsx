@@ -5,7 +5,12 @@ import React from "react";
 function Logo() {
   return (
     <Link href="/" passHref>
-      <Avatar cursor="pointer" size="md" mb={5} name="Project Gram"></Avatar>
+      <Avatar
+        alignSelf="center"
+        cursor="pointer"
+        size="md"
+        name="Project Gram"
+      ></Avatar>
     </Link>
   );
 }

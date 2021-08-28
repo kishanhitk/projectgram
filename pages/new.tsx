@@ -8,7 +8,6 @@ import {
 import { MainLayout } from "layout";
 import Link from "next/link";
 import React from "react";
-import { Card } from "components/Card";
 import Logo from "components/Logo";
 import ProjectSubmissionForm from "components/ProjectSubmissionForm";
 import firebaseClient from "config/firebase";
@@ -30,24 +29,14 @@ function SubmitProject() {
   firebaseClient();
   return (
     <MainLayout>
-      <Box minH="100vh" py="12" px={{ base: "4", lg: "8" }}>
-        <Box maxW="md" mx="auto" boxShadow="lg">
-          <Center>
-            <Logo />
-          </Center>
-          <Heading
-            fontSize="xl"
-            textAlign="center"
-            size="xl"
-            fontWeight="extrabold"
-          >
-            👋 Tell us more about this project
-          </Heading>
-
-          <Card>
-            <ProjectSubmissionForm />
-          </Card>
-        </Box>
+      <Box mx="auto" boxShadow="xl" rounded="xl">
+        <Center>
+          <Logo />
+        </Center>
+        <Heading fontSize="2xl" textAlign="center" fontWeight="bold">
+          👋 Tell us more about this project
+        </Heading>
+        <ProjectSubmissionForm p={10} />
       </Box>
     </MainLayout>
   );

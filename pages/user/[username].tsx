@@ -1,23 +1,21 @@
-import {
-  Avatar,
-  Divider,
-  SkeletonCircle,
-  SkeletonText,
-} from "@chakra-ui/react";
+import { Avatar, Button, SkeletonCircle, SkeletonText } from "@chakra-ui/react";
 import { Box, Flex, Heading, Text, VStack } from "@chakra-ui/layout";
 import { Card } from "components/Card";
 import { MainLayout } from "layout";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { BASE_URL } from "config";
 import { Project, User } from "types/projects";
 import ProjectDisplayCard from "components/ProjectDisplayCard";
+import { signOut, useSession } from "next-auth/client";
 
 interface IProfilePageProps {
   user: User;
 }
 const Profile = ({ user }: IProfilePageProps) => {
+  const [isSelf, setIsSelf] = useState(false);
   const [userProjects, setUserProjects] = React.useState<Project[]>([]);
+  const [session, loading] = useSession();
   const getAllUsers = async () => {
     try {
       const response = await axios.get(
@@ -31,6 +29,7 @@ const Profile = ({ user }: IProfilePageProps) => {
   };
   useEffect(() => {
     getAllUsers();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   console.log(userProjects.length === 0);
   return (
@@ -40,7 +39,10 @@ const Profile = ({ user }: IProfilePageProps) => {
           <Avatar
             size="2xl"
             name={user.firstName}
-            src={user.avatar?.url}
+            src={
+              user.avatar?.url ??
+              `https://avatars.dicebear.com/api/jdenticon/${user.username}.svg`
+            }
             marginRight="1.5"
           />
           <Flex
@@ -50,28 +52,41 @@ const Profile = ({ user }: IProfilePageProps) => {
           >
             <Heading p="1.5">{user.firstName}</Heading>
             {user.bio ? <Text p="1">{user.bio}</Text> : null}
-            <Text p="1">{user.username}</Text>
+            <Text p="1">@{user.username}</Text>
+            {!loading && session?.user?.name === user.username && (
+              <Button
+                m={4}
+                colorScheme="red"
+                variant="ghost"
+                onClick={() => {
+                  signOut();
+                }}
+              >
+                Logout
+              </Button>
+            )}
           </Flex>
         </VStack>
       </Card>
-      <Divider height={5} />
-      <Text textAlign="center" mt={10} fontSize="2xl">
+      <Text textAlign="center" m={10} fontSize="3xl">
         Projects by {user.firstName}
       </Text>
-      {userProjects.length === 0 &&
-        [1, 2, 3, 4].map((item) => {
-          return (
-            <Box padding="6" boxShadow="lg" key={item}>
-              <SkeletonCircle size="10" />
-              <SkeletonText mt="4" noOfLines={4} spacing="4" />
-            </Box>
-          );
-        })}
-      {userProjects &&
-        userProjects.length > 0 &&
-        userProjects.map((item, index) => {
-          return <ProjectDisplayCard key={index} project={item} />;
-        })}
+      <VStack spacing={10}>
+        {userProjects.length === 0 &&
+          [1, 2, 3, 4].map((item) => {
+            return (
+              <Box padding="6" boxShadow="lg" key={item}>
+                <SkeletonCircle size="10" />
+                <SkeletonText mt="4" noOfLines={4} spacing="4" />
+              </Box>
+            );
+          })}
+        {userProjects &&
+          userProjects.length > 0 &&
+          userProjects.map((item, index) => {
+            return <ProjectDisplayCard key={index} project={item} />;
+          })}
+      </VStack>
     </MainLayout>
   );
 };
