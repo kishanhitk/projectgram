@@ -6,7 +6,6 @@ import {
   Stack,
   Collapse,
   Icon,
-  Link,
   Popover,
   PopoverTrigger,
   PopoverContent,
@@ -149,21 +148,12 @@ const DesktopNav = () => {
     <HStack spacing={4}>
       <SearchBar />
       {NAV_ITEMS.map((navItem) => (
-        <Box key={navItem.label}>
+        <Box key={navItem.label} p={2}>
           <Popover trigger={"hover"} placement={"bottom-start"}>
             <PopoverTrigger>
-              <Link
-                p={2}
-                href={navItem.href ?? "#"}
-                fontWeight={500}
-                color={linkColor}
-                _hover={{
-                  textDecoration: "none",
-                  color: linkHoverColor,
-                }}
-              >
+              <NextLink href={navItem.href ?? "#"} passHref>
                 {navItem.label}
-              </Link>
+              </NextLink>
             </PopoverTrigger>
 
             {navItem.children && (
@@ -252,7 +242,7 @@ const MobileNavItem = ({ label, children, href }: NavItem) => {
     <Stack spacing={4} onClick={children && onToggle}>
       <Flex
         py={2}
-        as={Link}
+        as="a"
         href={href ?? "#"}
         justify={"space-between"}
         align={"center"}

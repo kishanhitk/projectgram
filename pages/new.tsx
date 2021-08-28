@@ -10,7 +10,6 @@ import Link from "next/link";
 import React from "react";
 import Logo from "components/Logo";
 import ProjectSubmissionForm from "components/ProjectSubmissionForm";
-import firebaseClient from "config/firebase";
 import { useSession } from "next-auth/client";
 
 function SubmitProject() {
@@ -26,7 +25,6 @@ function SubmitProject() {
       </MainLayout>
     );
   }
-  firebaseClient();
   return (
     <MainLayout>
       <Box mx="auto" boxShadow="xl" rounded="xl">
