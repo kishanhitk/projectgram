@@ -22,3 +22,8 @@ export interface PublicFile {
   url: string;
   key: string;
 }
+export interface Comment {
+  body: string;
+  id: string;
+  commenter: User;
+}
