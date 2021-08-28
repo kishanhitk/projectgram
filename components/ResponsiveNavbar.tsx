@@ -16,6 +16,9 @@ import {
   Container,
   HStack,
   useColorMode,
+  Input,
+  InputGroup,
+  InputLeftElement,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 
@@ -26,12 +29,15 @@ import {
   ChevronRightIcon,
   MoonIcon,
   SunIcon,
+  SearchIcon,
 } from "@chakra-ui/icons";
 import Logo from "./Logo";
 import React from "react";
 import { useSession } from "next-auth/client";
 import { Routes } from "config";
 import { NavLinkSolid } from "layout/Header";
+import router from "next/router";
+import SearchBar from "./SearchBar";
 
 export default function ResponsiveNavbar() {
   const { isOpen, onToggle } = useDisclosure();
@@ -39,18 +45,24 @@ export default function ResponsiveNavbar() {
   const { colorMode, toggleColorMode } = useColorMode();
   const [session, loading] = useSession();
   return (
-    <Box mb={6} as="header">
+    <Box mb={6} as="header" position="sticky" top="0" zIndex={10}>
       <Flex
-        bg={useColorModeValue("white", "gray.800")}
         color={useColorModeValue("gray.600", "white")}
         minH={"60px"}
         py={{ base: 2 }}
         px={{ base: 2, md: 20 }}
-        borderBottom={1}
         borderStyle={"solid"}
         dir="row"
-        borderColor={useColorModeValue("gray.200", "gray.900")}
+        borderBottom="1px solid rgba(33,41,63,.1)"
+        bg={useColorModeValue(
+          "rgba(255, 250, 250, 0.5)",
+          "rgba(26, 32, 44,0.8)"
+        )}
         align={{ base: "center" }}
+        style={{
+          backdropFilter: `saturate(180%) blur(10px)`,
+          transition: "background-color 0.1 ease-in-out",
+        }}
       >
         <Flex
           flex={{ base: 1, md: "auto" }}
@@ -63,6 +75,7 @@ export default function ResponsiveNavbar() {
               isOpen ? <CloseIcon w={3} h={3} /> : <HamburgerIcon w={5} h={5} />
             }
             variant={"ghost"}
+            ml={2}
             aria-label={"Toggle Navigation"}
           />
         </Flex>
@@ -130,9 +143,11 @@ const DesktopNav = () => {
   const linkColor = useColorModeValue("gray.600", "gray.200");
   const linkHoverColor = useColorModeValue("gray.800", "white");
   const popoverContentBgColor = useColorModeValue("white", "gray.800");
+  const [searchInput, setSearchInput] = React.useState("");
 
   return (
     <HStack spacing={4}>
+      <SearchBar />
       {NAV_ITEMS.map((navItem) => (
         <Box key={navItem.label}>
           <Popover trigger={"hover"} placement={"bottom-start"}>
@@ -213,12 +228,16 @@ const DesktopSubNav = ({ label, href, subLabel }: NavItem) => {
 };
 
 const MobileNav = () => {
+  const [searchInput, setSearchInput] = React.useState("");
+
   return (
     <Stack
+      shadow="sm"
       bg={useColorModeValue("white", "gray.800")}
       p={4}
       display={{ md: "none" }}
     >
+      <SearchBar />
       {NAV_ITEMS.map((navItem) => (
         <MobileNavItem key={navItem.label} {...navItem} />
       ))}
@@ -287,21 +306,21 @@ interface NavItem {
 }
 
 const NAV_ITEMS: Array<NavItem> = [
-  {
-    label: "More",
-    children: [
-      //   {
-      //     label: "Explore Design Work",
-      //     subLabel: "Trending Design to inspire you",
-      //     href: "#",
-      //   },
-      {
-        label: "About Us",
-        subLabel: "Know to motive of ProjectGram",
-        href: "/about",
-      },
-    ],
-  },
+  // {
+  //   label: "More",
+  //   children: [
+  //     //   {
+  //     //     label: "Explore Design Work",
+  //     //     subLabel: "Trending Design to inspire you",
+  //     //     href: "#",
+  //     //   },
+  //     {
+  //       label: "About Us",
+  //       subLabel: "Know to motive of ProjectGram",
+  //       href: "/about",
+  //     },
+  //   ],
+  // },
   //   {
   //     label: "Find Work",
   //     children: [
@@ -317,10 +336,10 @@ const NAV_ITEMS: Array<NavItem> = [
   //       },
   //     ],
   //   },
-  //   {
-  //     label: "Learn Design",
-  //     href: "#",
-  //   },
+  {
+    label: "About Us",
+    href: "/about",
+  },
   //   {
   //     label: "Hire Designers",
   //     href: "#",
