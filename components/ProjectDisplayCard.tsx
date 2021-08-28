@@ -16,6 +16,7 @@ function ProjectDisplayCard({ project }: IProjectDisplayCardProps) {
   return (
     <VStack
       bgColor={boxBGcolor}
+      width="100%"
       p={5}
       rounded="lg"
       cursor="pointer"
@@ -29,7 +30,7 @@ function ProjectDisplayCard({ project }: IProjectDisplayCardProps) {
           rounded={5}
           alt={project.title}
           src={
-            project.bannerImage ??
+            project.bannerImage?.url ??
             "https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1052&q=80"
           }
         ></Img>

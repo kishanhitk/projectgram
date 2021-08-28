@@ -18,7 +18,7 @@ import {
 import { Routes } from "config";
 import { SunIcon, MoonIcon, SearchIcon } from "@chakra-ui/icons";
 import { useRouter } from "next/router";
-import { signOut, useSession } from "next-auth/client";
+import { useSession } from "next-auth/client";
 interface NavLinkProps extends ButtonProps {
   url: string;
   children: ReactNode;
@@ -37,12 +37,12 @@ export const Header = () => {
       m="0 auto"
       mb={8}
       align="center"
-      p={4}
-      paddingX={10}
+      px={20}
+      py={2}
       top="0"
       zIndex={10}
-      boxShadow="md"
-      bg={useColorModeValue("rgba(255, 255, 255, 0.5)", "rgba(26, 32, 44,0.8)")}
+      borderBottom="1px solid rgba(33,41,63,.1)"
+      bg={useColorModeValue("rgba(255, 250, 250, 0.5)", "rgba(26, 32, 44,0.8)")}
       style={{
         backdropFilter: `saturate(180%) blur(10px)`,
         transition: "background-color 0.1 ease-in-out",
@@ -82,36 +82,25 @@ export const Header = () => {
       </Box>
       {/* Nav */}
       <Box as="nav">
-        <HStack>
-          <HStack>
-            {session && (
-              <NavLink key="new" url={Routes.submitNewProject}>
-                Submit Project 🚀
-              </NavLink>
-            )}
-            {session && (
-              <Button
-                onClick={() => {
-                  signOut();
-                }}
-              >
-                LogOut{" "}
-              </Button>
-            )}
-            {!session ? (
-              <NavLinkSolid key="login" url={Routes.login}>
-                Login
-              </NavLinkSolid>
-            ) : (
-              <NextLink href={`/user/${session.user.name}`} passHref>
-                <Avatar
-                  src={session.user?.image}
-                  name={session.user.name}
-                  _hover={{ textDecor: "none", cursor: "pointer" }}
-                ></Avatar>
-              </NextLink>
-            )}
-          </HStack>
+        <HStack spacing={5}>
+          {session && (
+            <NavLinkSolid key="new" url={Routes.submitNewProject}>
+              Submit Project 🚀
+            </NavLinkSolid>
+          )}
+          {!session ? (
+            <NavLinkSolid key="login" url={Routes.login}>
+              Login
+            </NavLinkSolid>
+          ) : (
+            <NextLink href={`/user/${session.user.name}`} passHref>
+              <Avatar
+                src={session.user?.image}
+                name={session.user.name}
+                _hover={{ textDecor: "none", cursor: "pointer" }}
+              ></Avatar>
+            </NextLink>
+          )}
           <IconButton
             onClick={toggleColorMode}
             aria-label="theme-switcher"
@@ -126,7 +115,7 @@ export const Header = () => {
   );
 };
 
-const NavLink = ({ url, children }: NavLinkProps) => (
+export const NavLink = ({ url, children }: NavLinkProps) => (
   <NextLink href={url} passHref>
     <Link _hover={{ textDecor: "none" }}>
       <Button
@@ -141,7 +130,7 @@ const NavLink = ({ url, children }: NavLinkProps) => (
   </NextLink>
 );
 
-const NavLinkSolid = ({ url, children }: NavLinkProps) => (
+export const NavLinkSolid = ({ url, children }: NavLinkProps) => (
   <NextLink href={url} passHref>
     <Link _hover={{ textDecor: "none" }}>
       <Button fontWeight="normal" variant="solid" colorScheme="messenger">
