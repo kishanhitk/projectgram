@@ -3,7 +3,6 @@ import {
   Button,
   chakra,
   FormControl,
-  FormErrorMessage,
   FormLabel,
   HTMLChakraProps,
   Icon,
@@ -19,7 +18,6 @@ import axios, { AxiosResponse } from "axios";
 import { BASE_URL } from "config";
 import { useRouter } from "next/router";
 import * as React from "react";
-import useStorage from "hooks/useStorage";
 import { FiFile } from "react-icons/fi";
 import { ImCross } from "react-icons/im";
 import { useSession } from "next-auth/client";
