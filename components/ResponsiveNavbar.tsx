@@ -106,12 +106,15 @@ export default function ResponsiveNavbar() {
             <>
               <Box display={{ base: "none", md: "inline-flex" }}>
                 <NavLinkSolid key="new" url={Routes.submitNewProject}>
-                  Submit Project 🚀
+                  Submit 🚀
                 </NavLinkSolid>
               </Box>
               <NextLink href={`/user/${session.user.name}`} passHref>
                 <Avatar
-                  src={session.user?.image}
+                  src={
+                    session.user?.image ??
+                    `https://avatars.dicebear.com/api/jdenticon/${session.user?.name}.svg`
+                  }
                   name={session.user.name}
                   _hover={{ textDecor: "none", cursor: "pointer" }}
                 ></Avatar>
@@ -242,8 +245,6 @@ const MobileNavItem = ({ label, children, href }: NavItem) => {
     <Stack spacing={4} onClick={children && onToggle}>
       <Flex
         py={2}
-        as="a"
-        href={href ?? "#"}
         justify={"space-between"}
         align={"center"}
         _hover={{
@@ -254,7 +255,9 @@ const MobileNavItem = ({ label, children, href }: NavItem) => {
           fontWeight={600}
           color={useColorModeValue("gray.600", "gray.200")}
         >
-          {label}
+          <NextLink href={href ?? "#"} passHref>
+            {label}
+          </NextLink>
         </Text>
         {children && (
           <Icon
