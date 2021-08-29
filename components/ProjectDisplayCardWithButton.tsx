@@ -38,7 +38,13 @@ function ProjectDisplayCardWithButtons({ project }: IProjectDisplayCardProps) {
           {project.title}
         </Heading>
         <HStack>
-          <Button variant="solid" colorScheme="messenger">
+          <Button
+            variant="solid"
+            colorScheme="messenger"
+            as="a"
+            target="_blank"
+            href={project.souceLink ?? "#"}
+          >
             Try it
           </Button>
           <UpvoteButton project={project} />
