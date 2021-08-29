@@ -37,12 +37,14 @@ import { Routes } from "config";
 import { NavLinkSolid } from "layout/Header";
 import router from "next/router";
 import SearchBar from "./SearchBar";
+import UserAvatar from "./UserAvatar";
 
 export default function ResponsiveNavbar() {
   const { isOpen, onToggle } = useDisclosure();
   const [searchInput, setSearchInput] = React.useState("");
   const { colorMode, toggleColorMode } = useColorMode();
   const [session, loading] = useSession();
+  console.log(session?.user);
   return (
     <Box mb={6} as="header" position="sticky" top="0" zIndex={10}>
       <Flex
@@ -111,6 +113,8 @@ export default function ResponsiveNavbar() {
               </Box>
               <NextLink href={`/user/${session.user.name}`} passHref>
                 <Avatar
+                  border="0.1px solid black"
+                  bg="whie"
                   src={
                     session.user?.image ??
                     `https://avatars.dicebear.com/api/jdenticon/${session.user?.name}.svg`

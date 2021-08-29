@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  Flex,
   FormControl,
   FormLabel,
   Heading,
@@ -15,6 +16,7 @@ import axios from "axios";
 import { Card } from "components/Card";
 import ProjectDisplayCard from "components/ProjectDisplayCard";
 import ProjectDisplayCardWithButtons from "components/ProjectDisplayCardWithButton";
+import UserAvatar from "components/UserAvatar";
 import { BASE_URL } from "config";
 import { MainLayout } from "layout";
 import { session, useSession } from "next-auth/client";
@@ -75,7 +77,6 @@ const CommentSection = ({ project }: ICommentSectionProps) => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     const token = session.access_token;
     const res = await axios.post(
       `${BASE_URL}/projects/${project.slug}/comments`,
@@ -89,12 +90,12 @@ const CommentSection = ({ project }: ICommentSectionProps) => {
       }
     );
     await fetchComments();
+    setUserComment("");
     console.log(res);
   };
 
   React.useEffect(() => {
     fetchComments();
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
@@ -115,8 +116,8 @@ const CommentSection = ({ project }: ICommentSectionProps) => {
           </Button>
         </VStack>
       </form>
-      <Heading as="h3" size="md">
-        Comments
+      <Heading as="h3" size="sm">
+        What others say?
       </Heading>
       {comments &&
         comments.length > 0 &&
@@ -128,12 +129,23 @@ const CommentSection = ({ project }: ICommentSectionProps) => {
 };
 const CommentCard = ({ comment }: { comment: Comment }) => {
   return (
-    <Card>
-      <VStack spacing={2}>
-        <Text>{comment.body}</Text>
-        <Text>{comment.commenter.firstName}</Text>
-      </VStack>
-    </Card>
+    <Flex alignContent="flex-start" my={5}>
+      <UserAvatar user={comment.commenter} size="sm" />
+      <Flex
+        mx={2}
+        direction="column"
+        justifyContent="flex-start"
+        alignItems="flex-start"
+      >
+        <Text fontSize="sm" fontWeight="semibold">
+          {comment.commenter.firstName}
+        </Text>
+        <Text fontSize="sm" color="gray">
+          {comment.commenter.bio}
+        </Text>
+        <Text fontSize="sm">{comment.body}</Text>
+      </Flex>
+    </Flex>
   );
 };
 export async function getServerSideProps(context) {
