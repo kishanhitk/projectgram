@@ -101,22 +101,24 @@ const CommentSection = ({ project }: ICommentSectionProps) => {
   }, []);
   return (
     <Card>
-      <form onSubmit={handleSubmit}>
-        <VStack>
-          <FormControl>
-            <FormLabel>Post a review</FormLabel>
-            <Textarea
-              type="text"
-              required
-              value={userComment}
-              onChange={(e) => setUserComment(e.target.value)}
-            />
-          </FormControl>
-          <Button type="submit" alignSelf="flex-end" colorScheme="messenger">
-            Submit
-          </Button>
-        </VStack>
-      </form>
+      {session?.user && (
+        <form onSubmit={handleSubmit}>
+          <VStack>
+            <FormControl>
+              <FormLabel>Post a review</FormLabel>
+              <Textarea
+                type="text"
+                required
+                value={userComment}
+                onChange={(e) => setUserComment(e.target.value)}
+              />
+            </FormControl>
+            <Button type="submit" alignSelf="flex-end" colorScheme="messenger">
+              Submit
+            </Button>
+          </VStack>
+        </form>
+      )}
       <Heading as="h3" size="sm">
         What others say?
       </Heading>
