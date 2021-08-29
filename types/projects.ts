@@ -22,8 +22,11 @@ export interface PublicFile {
   url: string;
   key: string;
 }
-export interface Comment {
+export interface Comment extends BaseEntity {
   body: string;
   id: string;
   commenter: User;
+}
+export interface BaseEntity {
+  createdAt: Date;
 }

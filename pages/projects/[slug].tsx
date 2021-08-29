@@ -23,7 +23,8 @@ import { session, useSession } from "next-auth/client";
 import Head from "next/head";
 import React from "react";
 import { Project, Comment } from "types/projects";
-
+import moment from "moment";
+import { GetServerSidePropsContext } from "next";
 interface IProjectPageProps {
   project: Project;
 }
@@ -129,17 +130,23 @@ const CommentSection = ({ project }: ICommentSectionProps) => {
 };
 const CommentCard = ({ comment }: { comment: Comment }) => {
   return (
-    <Flex alignContent="flex-start" my={5}>
+    <Flex alignContent="flex-start" my={7}>
       <UserAvatar user={comment.commenter} size="sm" />
       <Flex
         mx={2}
         direction="column"
         justifyContent="flex-start"
-        alignItems="flex-start"
+        alignItems="stretch"
+        flex={1}
       >
-        <Text fontSize="sm" fontWeight="semibold">
-          {comment.commenter.firstName}
-        </Text>
+        <Flex justifyContent="space-between">
+          <Text fontSize="sm" fontWeight="semibold">
+            {comment.commenter.firstName}
+          </Text>
+          <Text fontSize="xs" color="gray">
+            {moment(comment.createdAt).fromNow()}
+          </Text>
+        </Flex>
         <Text fontSize="sm" color="gray">
           {comment.commenter.bio}
         </Text>
@@ -148,7 +155,7 @@ const CommentCard = ({ comment }: { comment: Comment }) => {
     </Flex>
   );
 };
-export async function getServerSideProps(context) {
+export async function getServerSideProps(context: GetServerSidePropsContext) {
   const slug = context.params.slug;
   const res = await axios.get(`${BASE_URL}/projects/${slug}`);
   const project: Project = await res.data;
