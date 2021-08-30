@@ -37,12 +37,14 @@ import { Routes } from "config";
 import { NavLinkSolid } from "layout/Header";
 import router from "next/router";
 import SearchBar from "./SearchBar";
+import UserAvatar from "./UserAvatar";
 
 export default function ResponsiveNavbar() {
   const { isOpen, onToggle } = useDisclosure();
   const [searchInput, setSearchInput] = React.useState("");
   const { colorMode, toggleColorMode } = useColorMode();
   const [session, loading] = useSession();
+  console.log(session?.user);
   return (
     <Box mb={6} as="header" position="sticky" top="0" zIndex={10}>
       <Flex
@@ -106,12 +108,17 @@ export default function ResponsiveNavbar() {
             <>
               <Box display={{ base: "none", md: "inline-flex" }}>
                 <NavLinkSolid key="new" url={Routes.submitNewProject}>
-                  Submit Project 🚀
+                  Submit 🚀
                 </NavLinkSolid>
               </Box>
               <NextLink href={`/user/${session.user.name}`} passHref>
                 <Avatar
-                  src={session.user?.image}
+                  border="0.1px solid black"
+                  bg="whie"
+                  src={
+                    session.user?.image ??
+                    `https://avatars.dicebear.com/api/jdenticon/${session.user?.name}.svg`
+                  }
                   name={session.user.name}
                   _hover={{ textDecor: "none", cursor: "pointer" }}
                 ></Avatar>
@@ -242,8 +249,6 @@ const MobileNavItem = ({ label, children, href }: NavItem) => {
     <Stack spacing={4} onClick={children && onToggle}>
       <Flex
         py={2}
-        as="a"
-        href={href ?? "#"}
         justify={"space-between"}
         align={"center"}
         _hover={{
@@ -254,7 +259,9 @@ const MobileNavItem = ({ label, children, href }: NavItem) => {
           fontWeight={600}
           color={useColorModeValue("gray.600", "gray.200")}
         >
-          {label}
+          <NextLink href={href ?? "#"} passHref>
+            {label}
+          </NextLink>
         </Text>
         {children && (
           <Icon

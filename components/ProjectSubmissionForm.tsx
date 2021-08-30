@@ -30,7 +30,7 @@ function ProjectSubmissionForm(props: HTMLChakraProps<"form">) {
   const [title, setTitle] = React.useState("");
   const [shortDescription, setShortDescription] = React.useState("");
   const [longDescription, setLongDescription] = React.useState("");
-  const [file, setFile] = React.useState(null);
+  const [file, setFile] = React.useState<File | undefined>(null);
   const [imageUrl, setImageUrl] = React.useState(null);
   const [liveUrl, setLiveUrl] = React.useState(null);
   const [sourceCode, setSourceCode] = React.useState(null);
@@ -40,6 +40,10 @@ function ProjectSubmissionForm(props: HTMLChakraProps<"form">) {
   const submitHandler = async (e) => {
     e.preventDefault();
     setIsLoading(true);
+    if (file.size > 300000) {
+      setError("Banner should be less than 300kb");
+      return;
+    }
     try {
       const token = session.access_token;
       let res: AxiosResponse;

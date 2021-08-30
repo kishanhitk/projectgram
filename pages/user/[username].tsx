@@ -8,6 +8,7 @@ import { BASE_URL } from "config";
 import { Project, User } from "types/projects";
 import ProjectDisplayCard from "components/ProjectDisplayCard";
 import { signOut, useSession } from "next-auth/client";
+import UserAvatar from "components/UserAvatar";
 
 interface IProfilePageProps {
   user: User;
@@ -36,15 +37,7 @@ const Profile = ({ user }: IProfilePageProps) => {
     <MainLayout>
       <Card>
         <VStack justifyContent="center" alignItems="center">
-          <Avatar
-            size="2xl"
-            name={user.firstName}
-            src={
-              user.avatar?.url ??
-              `https://avatars.dicebear.com/api/jdenticon/${user.username}.svg`
-            }
-            marginRight="1.5"
-          />
+          <UserAvatar user={user} size="2xl" />
           <Flex
             justifyContent="center"
             flexDirection="column"
