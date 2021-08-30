@@ -15,10 +15,12 @@ function UpvoteButton({ project }: IUpvoteButtonProps) {
   const [isUpvoteDisabled, setIsUpvoteDisabled] = React.useState(true);
   const checkIfUpvoted = async () => {
     if (loading) {
+      console.log("Auth Session not ready");
       return;
     }
     if (session?.user) {
       setIsUpvoteDisabled(false);
+      console.log("enabled upvote button");
       const token = session?.access_token;
       console.log(document.cookie);
 
