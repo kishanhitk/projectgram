@@ -32,7 +32,6 @@ const Profile = ({ user }: IProfilePageProps) => {
     getAllUsers();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  console.log(userProjects.length === 0);
   return (
     <MainLayout>
       <Card>

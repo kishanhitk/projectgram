@@ -15,6 +15,8 @@ import LoginForm from "components/LoginForm";
 import * as React from "react";
 import { FaFacebook, FaGithub, FaGoogle } from "react-icons/fa";
 import Logo from "components/Logo";
+import { signIn } from "next-auth/client";
+import Head from "next/head";
 
 const Login = () => {
   return (
@@ -24,6 +26,10 @@ const Login = () => {
       py="12"
       px={{ base: "4", lg: "8" }}
     >
+      <Head>
+        <title>Login | ProjectGram</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       <Box maxW="md" mx="auto">
         <Center>
           <Logo />
@@ -43,7 +49,11 @@ const Login = () => {
               <VisuallyHidden>Login with Facebook</VisuallyHidden>
               <FaFacebook />
             </Button>
-            <Button color="currentColor" variant="outline">
+            <Button
+              color="currentColor"
+              variant="outline"
+              onClick={() => signIn("google")}
+            >
               <VisuallyHidden>Login with Google</VisuallyHidden>
               <FaGoogle />
             </Button>

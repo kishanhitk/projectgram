@@ -16,7 +16,7 @@ export interface User {
   firstName: string;
   username: string;
   bio: string;
-  avatar: PublicFile;
+  avatar: string;
 }
 export interface PublicFile {
   url: string;

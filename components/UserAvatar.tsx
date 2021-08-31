@@ -14,7 +14,7 @@ function UserAvatar(props: UserAvatarProps) {
       size={props.size}
       name={props.user.firstName}
       src={
-        props.user.avatar?.url ??
+        props.user.avatar ??
         `https://avatars.dicebear.com/api/jdenticon/${props.user.username}.svg`
       }
     />
