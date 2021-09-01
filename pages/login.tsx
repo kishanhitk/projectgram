@@ -52,7 +52,7 @@ const Login = () => {
             <Button
               color="currentColor"
               variant="outline"
-              onClick={() => signIn("google")}
+              onClick={() => signIn("google", { callbackUrl: "/" })}
             >
               <VisuallyHidden>Login with Google</VisuallyHidden>
               <FaGoogle />
