@@ -1,11 +1,11 @@
 import { ChakraProvider } from "@chakra-ui/react";
-import "@fontsource/poppins/100.css";
-import "@fontsource/poppins/200.css";
-import "@fontsource/poppins/300.css";
-import "@fontsource/poppins/400.css";
-import "@fontsource/poppins/500.css";
-import "@fontsource/poppins/600.css";
-import "@fontsource/poppins/700.css";
+import "@fontsource/inter/100.css";
+import "@fontsource/inter/200.css";
+import "@fontsource/inter/300.css";
+import "@fontsource/inter/400.css";
+import "@fontsource/inter/500.css";
+import "@fontsource/inter/600.css";
+import "@fontsource/inter/700.css";
 import theme from "./../theme/index";
 import "nprogress/nprogress.css";
 import dynamic from "next/dynamic";
@@ -29,15 +29,11 @@ function MyApp({ Component, pageProps }) {
   );
 }
 
-
-
 export default MyApp;
-
 
 export async function getInitialProps(context) {
   console.log(context);
   return {
-    props: {
-    },
+    props: {},
   };
 }
