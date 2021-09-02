@@ -44,6 +44,8 @@ export default function ResponsiveNavbar() {
   const [searchInput, setSearchInput] = React.useState("");
   const { colorMode, toggleColorMode } = useColorMode();
   const [session, loading] = useSession();
+  console.log(session?.access_token);
+
   console.log(session?.user);
   return (
     <Box mb={6} as="header" position="sticky" top="0" zIndex={10}>

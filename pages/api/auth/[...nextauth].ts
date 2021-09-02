@@ -30,6 +30,23 @@ export default NextAuth({
     // to authenticate indirectly (eg. to a database driver)
   },
   callbacks: {
+    async signIn(user, account, profile) {
+      if (account?.provider === "google") {
+        console.log("Google token", account?.accessToken);
+        if (account?.accessToken) {
+          const BASE_URL = process.env.BASE_URL || "http://localhost:4000";
+          const res = await axios.post(`${BASE_URL}/google-authentication`, {
+            token: account?.accessToken,
+          });
+          const data = res.data;
+          console.log("Google profile", data);
+          user.name = data.user.username;
+          user.access_token = data.user.access_token;
+        }
+      }
+
+      return true;
+    },
     /**
      * @param  {object}  token     Decrypted JSON Web Token
      * @param  {object}  user      User object      (only available on sign in)
@@ -39,7 +56,6 @@ export default NextAuth({
      * @return {object}            JSON Web Token that will be saved
      */
     async jwt(token, user, account, profile, isNewUser) {
-      // Add access_token to the token right after signin
       if (user?.access_token) {
         token.access_token = user.access_token;
       }
@@ -61,6 +77,10 @@ export default NextAuth({
   },
 
   providers: [
+    Providers.Google({
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_SECRET,
+    }),
     Providers.Credentials({
       // The name to display on the sign in form (e.g. 'Sign in with...')
       name: "Credentials",

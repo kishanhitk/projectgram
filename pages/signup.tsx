@@ -1,22 +1,17 @@
 import {
-  Avatar,
   Box,
-  Button,
   Center,
   Heading,
-  SimpleGrid,
   Text,
   useColorModeValue,
-  VisuallyHidden,
 } from "@chakra-ui/react";
 import { Card } from "components/Card";
 import { DividerWithText } from "components/DividerWIthText";
 import { TextLink } from "components/TextLink";
-import LoginForm from "components/LoginForm";
 import * as React from "react";
-import { FaFacebook, FaGithub, FaGoogle } from "react-icons/fa";
 import SignUpForm from "components/SignUpForm";
 import Logo from "components/Logo";
+import LoginWithGoogleButton from "components/LoginWithGoogleButton";
 
 function SignUp() {
   return (
@@ -39,21 +34,8 @@ function SignUp() {
         </Text>
         <Card>
           <SignUpForm />
-          <DividerWithText mt="6">or continue with</DividerWithText>
-          <SimpleGrid mt="6" columns={3} spacing="3">
-            <Button color="currentColor" variant="outline">
-              <VisuallyHidden>Login with Facebook</VisuallyHidden>
-              <FaFacebook />
-            </Button>
-            <Button color="currentColor" variant="outline">
-              <VisuallyHidden>Login with Google</VisuallyHidden>
-              <FaGoogle />
-            </Button>
-            <Button color="currentColor" variant="outline">
-              <VisuallyHidden>Login with Github</VisuallyHidden>
-              <FaGithub />
-            </Button>
-          </SimpleGrid>
+          <DividerWithText>or</DividerWithText>
+          <LoginWithGoogleButton />
         </Card>
       </Box>
     </Box>
