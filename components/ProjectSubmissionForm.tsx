@@ -32,10 +32,9 @@ function ProjectSubmissionForm(props: HTMLChakraProps<"form">) {
   const [longDescription, setLongDescription] = React.useState("");
   const [file, setFile] = React.useState<File | undefined>(null);
   const [imageUrl, setImageUrl] = React.useState(null);
-  const [liveUrl, setLiveUrl] = React.useState(null);
-  const [sourceCode, setSourceCode] = React.useState(null);
+  const [website, setWebsite] = React.useState(null);
+  const [sourceLink, setSourceLink] = React.useState(null);
   const [error, setError] = React.useState(null);
-  // const { url, progress } = useStorage(file);
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -52,7 +51,9 @@ function ProjectSubmissionForm(props: HTMLChakraProps<"form">) {
         {
           title,
           shortDescription,
+          website,
           longDescription,
+          sourceLink,
         },
         {
           headers: {
@@ -102,7 +103,7 @@ function ProjectSubmissionForm(props: HTMLChakraProps<"form">) {
           />
         </FormControl>
         <FormControl>
-          <FormLabel>Tweet size description of your project</FormLabel>
+          <FormLabel>Tagline</FormLabel>
           <Input
             type="text"
             required
@@ -111,7 +112,7 @@ function ProjectSubmissionForm(props: HTMLChakraProps<"form">) {
           />
         </FormControl>
         <FormControl>
-          <FormLabel>Long Description</FormLabel>
+          <FormLabel>Description</FormLabel>
           <Textarea
             type="text"
             required
@@ -170,16 +171,16 @@ function ProjectSubmissionForm(props: HTMLChakraProps<"form">) {
           <FormLabel>Live URL</FormLabel>
           <Input
             type="text"
-            value={liveUrl}
-            onChange={(e) => setLiveUrl(e.target.value)}
+            value={website}
+            onChange={(e) => setWebsite(e.target.value)}
           />
         </FormControl>
         <FormControl>
           <FormLabel>Source Code</FormLabel>
           <Input
             type="text"
-            value={sourceCode}
-            onChange={(e) => setSourceCode(e.target.value)}
+            value={sourceLink}
+            onChange={(e) => setSourceLink(e.target.value)}
           />
         </FormControl>
         <Button

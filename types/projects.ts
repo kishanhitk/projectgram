@@ -1,4 +1,4 @@
-export interface Project {
+export interface Project extends BaseEntity {
   id: string;
   title: string;
   shortDescription: string;
@@ -6,14 +6,15 @@ export interface Project {
   slug: string;
   bannerImage: PublicFile;
   screenshots: string[];
-  souceLink: string;
+  sourceLink: string;
   website: string;
   upvote_count: number;
   hashtags: string[];
   creator: User;
 }
-export interface User {
+export interface User extends BaseEntity {
   firstName: string;
+  lastName: string;
   username: string;
   bio: string;
   avatar: string;
