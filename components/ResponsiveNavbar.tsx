@@ -158,14 +158,14 @@ const DesktopNav = () => {
       <SearchBar />
       {NAV_ITEMS.map((navItem) => (
         <Box key={navItem.label} p={2}>
-          <Popover trigger={"hover"} placement={"bottom-start"}>
-            <PopoverTrigger>
-              <NextLink href={navItem.href ?? "#"} passHref>
-                {navItem.label}
-              </NextLink>
-            </PopoverTrigger>
+          {/* <Popover trigger={"hover"} placement={"bottom-start"}> */}
+          {/* <PopoverTrigger> */}
+          <NextLink href={navItem.href ?? "#"} passHref>
+            {navItem.label}
+          </NextLink>
+          {/* </PopoverTrigger> */}
 
-            {navItem.children && (
+          {/* {navItem.children && (
               <PopoverContent
                 border={0}
                 boxShadow={"xl"}
@@ -181,7 +181,7 @@ const DesktopNav = () => {
                 </Stack>
               </PopoverContent>
             )}
-          </Popover>
+          </Popover> */}
         </Box>
       ))}
     </HStack>
@@ -203,6 +203,7 @@ const DesktopSubNav = ({ label, href, subLabel }: NavItem) => {
             <Text
               transition={"all .3s ease"}
               _groupHover={{ color: "blue.400" }}
+              _hover={{ color: "blue.400" }}
               fontWeight={500}
             >
               {label}
@@ -336,7 +337,7 @@ const NAV_ITEMS: Array<NavItem> = [
   //     ],
   //   },
   {
-    label: "About Us",
+    label: "About",
     href: "/about",
   },
   //   {

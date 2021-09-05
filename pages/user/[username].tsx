@@ -9,6 +9,8 @@ import { Project, User } from "types/projects";
 import ProjectDisplayCard from "components/ProjectDisplayCard";
 import { signOut, useSession } from "next-auth/client";
 import UserAvatar from "components/UserAvatar";
+import Head from "next/head";
+import moment from "moment";
 
 interface IProfilePageProps {
   user: User;
@@ -34,6 +36,11 @@ const Profile = ({ user }: IProfilePageProps) => {
   }, []);
   return (
     <MainLayout>
+      <Head>
+        <title>{`${user.firstName}  ${user.lastName}`} | ProjectGram</title>
+        <meta name="description" content={`${user.firstName} on ProjectGram`} />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       <Card>
         <VStack justifyContent="center" alignItems="center">
           <UserAvatar user={user} size="2xl" />
@@ -42,9 +49,12 @@ const Profile = ({ user }: IProfilePageProps) => {
             flexDirection="column"
             alignItems="center"
           >
-            <Heading p="1.5">{user.firstName}</Heading>
+            <Heading p="1.5">{user.firstName + " " + user.lastName}</Heading>
             {user.bio ? <Text p="1">{user.bio}</Text> : null}
             <Text p="1">@{user.username}</Text>
+            <Text p="1">
+              Joined - {moment(user.createdAt).format("MMMM Do YYYY")}
+            </Text>
             {!loading && session?.user?.name === user.username && (
               <Button
                 m={4}
