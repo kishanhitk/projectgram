@@ -1,17 +1,21 @@
-import { Avatar } from "@chakra-ui/react";
+import { Avatar, Box, Container } from "@chakra-ui/react";
 import Link from "next/link";
 import React from "react";
-
+import Image from "next/image";
 function Logo() {
   return (
-    <Link href="/" passHref>
-      <Avatar
-        alignSelf="center"
-        cursor="pointer"
-        size="md"
-        name="Project Gram"
-      ></Avatar>
-    </Link>
+    <Box cursor="pointer">
+      <Link href="/" passHref>
+        <Image
+          quality={100}
+          priority={true}
+          src="/assets/pg_logo.png"
+          alt="Logo - ProjectGram"
+          height="50px"
+          width="50px"
+        ></Image>
+      </Link>
+    </Box>
   );
 }
 
