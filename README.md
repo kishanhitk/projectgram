@@ -1,5 +1,8 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+## API Repo
+[github.com/kishanhitk/projectgram-api](https://github.com/kishanhitk/projectgram-api)
+
 ## Getting Started
 
 First, run the development server:
