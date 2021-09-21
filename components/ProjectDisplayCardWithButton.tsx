@@ -7,6 +7,10 @@ import {
   HStack,
   Button,
   VStack,
+  Wrap,
+  Center,
+  WrapItem,
+  Box,
 } from "@chakra-ui/react";
 import React from "react";
 import { Project } from "types/projects";
@@ -19,6 +23,7 @@ interface IProjectDisplayCardProps {
 }
 function ProjectDisplayCardWithButtons({ project }: IProjectDisplayCardProps) {
   const boxBGcolor = useColorModeValue("gray.100", "gray.700");
+  const tagBg = useColorModeValue("blue.200", "blue.800");
   console.log(project);
   return (
     <Stack my={7} bgColor={boxBGcolor} p={5} rounded={5} spacing={3}>
@@ -71,13 +76,17 @@ function ProjectDisplayCardWithButtons({ project }: IProjectDisplayCardProps) {
           </Text>
         </VStack>
       </HStack>
-      {/* <VStack spacing={3}>
-        {project.tags.map((tag) => (
-          <Text key={tag} fontSize="sm">
-            {tag}
-          </Text>
+      <Wrap spacing="10px" align="center">
+        {project.hashtags?.map((hashtag, i) => (
+          <WrapItem key={hashtag.name}>
+            <Link href={`/projects?tags=${hashtag.name}`} passHref>
+              <Box rounded="md" px="10px" bg={tagBg} cursor="pointer">
+                #{hashtag.name}
+              </Box>
+            </Link>
+          </WrapItem>
         ))}
-      </VStack> */}
+      </Wrap>
     </Stack>
   );
 }
