@@ -1,3 +1,7 @@
+export interface BaseEntity {
+  createdAt: Date;
+  id: string;
+}
 export interface Project extends BaseEntity {
   id: string;
   title: string;
@@ -9,7 +13,7 @@ export interface Project extends BaseEntity {
   sourceLink: string;
   website: string;
   upvote_count: number;
-  hashtags: string[];
+  hashtags: Tag[];
   creator: User;
 }
 export interface User extends BaseEntity {
@@ -28,6 +32,8 @@ export interface Comment extends BaseEntity {
   id: string;
   commenter: User;
 }
-export interface BaseEntity {
-  createdAt: Date;
+export interface Tag extends BaseEntity {
+  label: string;
+  value: string;
+  name: string;
 }

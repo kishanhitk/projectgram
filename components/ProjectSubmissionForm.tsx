@@ -21,7 +21,8 @@ import * as React from "react";
 import { FiFile } from "react-icons/fi";
 import { ImCross } from "react-icons/im";
 import { useSession } from "next-auth/client";
-import { Project } from "types/projects";
+import { Project, Tag } from "types/projects";
+import { CUIAutoComplete } from "chakra-ui-autocomplete";
 
 function ProjectSubmissionForm(props: HTMLChakraProps<"form">) {
   const [session, loading] = useSession();
@@ -35,11 +36,37 @@ function ProjectSubmissionForm(props: HTMLChakraProps<"form">) {
   const [website, setWebsite] = React.useState(null);
   const [sourceLink, setSourceLink] = React.useState(null);
   const [error, setError] = React.useState(null);
+  const [pickerItems, setPickerItems] = React.useState([]);
+  const [selectedItems, setSelectedItems] = React.useState<Tag[]>([]);
 
+  const fetchTags = async () => {
+    const res = await axios.get(`${BASE_URL}/hashtags`);
+    const tags: Tag[] = await res.data;
+    tags.forEach((tag) => {
+      tag.label = tag.name;
+      tag.value = tag.name;
+    });
+    setPickerItems(tags);
+    console.log(tags);
+  };
+
+  React.useEffect(() => {
+    fetchTags();
+  }, []);
+  const handleCreateItem = (item: Tag) => {
+    setPickerItems((curr) => [...curr, item]);
+    setSelectedItems((curr) => [...curr, item]);
+  };
+
+  const handleSelectedItemsChange = (selectedItems?: Tag[]) => {
+    if (selectedItems) {
+      setSelectedItems(selectedItems);
+    }
+  };
   const submitHandler = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    if (file.size > 300000) {
+    if (file?.size > 300000) {
       setError("Banner should be less than 300kb");
       return;
     }
@@ -54,6 +81,7 @@ function ProjectSubmissionForm(props: HTMLChakraProps<"form">) {
           website,
           longDescription,
           sourceLink,
+          tags: [...selectedItems.map((tag) => tag.id)],
         },
         {
           headers: {
@@ -64,23 +92,25 @@ function ProjectSubmissionForm(props: HTMLChakraProps<"form">) {
       console.log(res);
       const uploadedProject: Project = res.data;
 
-      try {
-        const formData = new FormData();
-        formData.append("bannerImage", file);
-        formData.append("projectId", uploadedProject.id);
-        const uploadBannerImageResponse = await axios.post(
-          `${BASE_URL}/projects/upload/bannerImage`,
-          formData,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        );
-        console.log(uploadBannerImageResponse);
-      } catch (error) {
-        setError(error.response.data.message);
+      if (file) {
+        try {
+          const formData = new FormData();
+          formData.append("bannerImage", file);
+          formData.append("projectId", uploadedProject.id);
+          const uploadBannerImageResponse = await axios.post(
+            `${BASE_URL}/projects/upload/bannerImage`,
+            formData,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "multipart/form-data",
+              },
+            }
+          );
+          console.log(uploadBannerImageResponse);
+        } catch (error) {
+          setError(error.response.data.message);
+        }
       }
       router.replace(`/projects/${uploadedProject.slug}`);
     } catch (error) {
@@ -151,6 +181,18 @@ function ProjectSubmissionForm(props: HTMLChakraProps<"form">) {
             </InputGroup>
           )}
         </FormControl>
+        {pickerItems?.length > 0 && (
+          <CUIAutoComplete
+            label="Add Tags to your project"
+            placeholder="Type a language/framework"
+            onCreateItem={handleCreateItem}
+            items={pickerItems}
+            selectedItems={selectedItems}
+            onSelectedItemsChange={(changes) =>
+              handleSelectedItemsChange(changes.selectedItems)
+            }
+          />
+        )}
         {imageUrl && (
           <Box postion="relative" bg="gray.100">
             <Button
