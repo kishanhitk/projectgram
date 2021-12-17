@@ -79,7 +79,7 @@ function ProjectDisplayCardWithButtons({ project }: IProjectDisplayCardProps) {
       <Wrap spacing="10px" align="center">
         {project.hashtags?.map((hashtag, i) => (
           <WrapItem key={hashtag.name}>
-            <Link href={`/projects?tags=${hashtag.name}`} passHref>
+            <Link href={`/tags/${hashtag.name}`} passHref>
               <Box rounded="md" px="10px" bg={tagBg} cursor="pointer">
                 #{hashtag.name}
               </Box>
