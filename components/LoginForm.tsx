@@ -8,10 +8,10 @@ import {
   Input,
   Stack,
 } from "@chakra-ui/react";
+import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
 import * as React from "react";
 import { PasswordField } from "./PasswordField";
-import { signIn } from "next-auth/client";
 
 function LoginForm(props: HTMLChakraProps<"form">) {
   const [username, setUsername] = React.useState("acer");

@@ -19,7 +19,7 @@ import ProjectDisplayCardWithButtons from "components/ProjectDisplayCardWithButt
 import UserAvatar from "components/UserAvatar";
 import { BASE_URL } from "config";
 import { MainLayout } from "layout";
-import { session, useSession } from "next-auth/client";
+import { useSession } from "next-auth/react";
 import Head from "next/head";
 import React from "react";
 import { Project, Comment } from "types/projects";
@@ -66,7 +66,8 @@ interface ICommentSectionProps {
 }
 const CommentSection = ({ project }: ICommentSectionProps) => {
   const [userComment, setUserComment] = React.useState("");
-  const [session, loading] = useSession();
+  const { data: session, status } = useSession();
+  const loading = status === "loading";
   const [comments, setComments] = React.useState<Comment[]>([]);
 
   const fetchComments = async () => {
@@ -78,7 +79,7 @@ const CommentSection = ({ project }: ICommentSectionProps) => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const token = session.access_token;
+    const token = session.user.email;
     const res = await axios.post(
       `${BASE_URL}/projects/${project.slug}/comments`,
       {

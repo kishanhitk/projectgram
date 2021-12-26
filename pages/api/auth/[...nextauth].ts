@@ -1,15 +1,13 @@
 import axios from "axios";
 import { BASE_URL } from "config";
 import NextAuth from "next-auth";
-import { session } from "next-auth/client";
-import Providers from "next-auth/providers";
-
+import GoogleProvider from "next-auth/providers/google";
+import CredentialsProvider from "next-auth/providers/credentials";
 export default NextAuth({
   session: {
     // Use JSON Web Tokens for session instead of database sessions.
     // This option can be used with or without a database for users/accounts.
     // Note: `jwt` is automatically set to `true` if no database is specified.
-    jwt: true,
 
     // Seconds - How long until an idle session expires and is no longer valid.
     maxAge: 30 * 24 * 60 * 60, // 30 days
@@ -30,7 +28,7 @@ export default NextAuth({
     // to authenticate indirectly (eg. to a database driver)
   },
   callbacks: {
-    async signIn(user, account, profile) {
+    async signIn({ user, account, profile, email, credentials }) {
       if (account?.provider === "google") {
         console.log("Google token", account?.accessToken);
         if (account?.accessToken) {
@@ -55,7 +53,7 @@ export default NextAuth({
      * @param  {boolean} isNewUser True if new user (only available on sign in)
      * @return {object}            JSON Web Token that will be saved
      */
-    async jwt(token, user, account, profile, isNewUser) {
+    async jwt({ token, user, account, profile, isNewUser }) {
       if (user?.access_token) {
         token.access_token = user.access_token;
       }
@@ -64,10 +62,11 @@ export default NextAuth({
       }
       return token;
     },
-    async session(_, token) {
-      const access_token = token.access_token;
+    async session({ session, token, user }) {
+      const access_token = user.access_token;
       // Add access_token to the token right after signin
-      return { ..._, access_token };
+      session.user.email = access_token as string;
+      return session;
     },
   },
   pages: {
@@ -77,11 +76,11 @@ export default NextAuth({
   },
 
   providers: [
-    Providers.Google({
+    GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_SECRET,
     }),
-    Providers.Credentials({
+    CredentialsProvider({
       // The name to display on the sign in form (e.g. 'Sign in with...')
       name: "Credentials",
       // The credentials is used to generate a suitable form on the sign in page.
@@ -106,6 +105,7 @@ export default NextAuth({
         user.name = res.data.user.username;
         user.image = res.data.user.avatar?.url;
         user.access_token = res.data.user.access_token;
+
         // If no error and we have user data, return it
         if (res.status === 201 && user) {
           return user;

@@ -1,7 +1,7 @@
 import { Button, toast, useToast } from "@chakra-ui/react";
 import axios from "axios";
 import { BASE_URL } from "config";
-import { useSession } from "next-auth/client";
+import { useSession } from "next-auth/react";
 import React, { useEffect } from "react";
 import { Project } from "types/projects";
 interface IUpvoteButtonProps {
@@ -11,7 +11,8 @@ function UpvoteButton({ project }: IUpvoteButtonProps) {
   const toast = useToast();
   const [upvoteButtonLoading, setUpvoteButtonLoading] = React.useState(false);
   const [upvoted, setUpvoted] = React.useState(false);
-  const [session, loading] = useSession();
+  const { data: session, status } = useSession();
+  const loading = status === "loading";
   const [isUpvoteDisabled, setIsUpvoteDisabled] = React.useState(true);
   const checkIfUpvoted = async () => {
     if (loading) {

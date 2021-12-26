@@ -3,22 +3,22 @@ import { Box, Flex, Heading, Text, VStack } from "@chakra-ui/layout";
 import { Card } from "components/Card";
 import { MainLayout } from "layout";
 import React, { useEffect, useState } from "react";
+import { signOut, useSession } from "next-auth/react";
 import axios from "axios";
 import { BASE_URL } from "config";
 import { Project, User } from "types/projects";
 import ProjectDisplayCard from "components/ProjectDisplayCard";
-import { signOut, useSession } from "next-auth/client";
 import UserAvatar from "components/UserAvatar";
 import Head from "next/head";
 import moment from "moment";
-
 interface IProfilePageProps {
   user: User;
 }
 const Profile = ({ user }: IProfilePageProps) => {
   const [isSelf, setIsSelf] = useState(false);
   const [userProjects, setUserProjects] = React.useState<Project[]>([]);
-  const [session, loading] = useSession();
+  const { data: session, status } = useSession();
+  const loading = status === "loading";
   const getAllUsers = async () => {
     try {
       const response = await axios.get(
