@@ -38,13 +38,13 @@ export default function Home({ projects }: IHomePageProps) {
 }
 
 // Get Server Side Props
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const res = await axios.get(`${BASE_URL}/projects?sortBy=popular`);
   const projects: Project[] = await res.data;
   return {
     props: {
       projects,
     },
-    revalidate: 10, // In seconds
+    // revalidate: 10, // In seconds
   };
 }
