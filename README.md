@@ -3,7 +3,7 @@ Share your side projects with the world.
 
 
 
-## API Repo
+## Backend Repo
 [github.com/kishanhitk/projectgram-api](https://github.com/kishanhitk/projectgram-api)
 
 ## Getting Started
