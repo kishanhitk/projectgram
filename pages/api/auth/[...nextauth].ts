@@ -34,7 +34,7 @@ export default NextAuth({
       if (account?.provider === "google") {
         console.log("Google token", account?.accessToken);
         if (account?.accessToken) {
-          const BASE_URL = process.env.BASE_URL || "http://localhost:4000";
+          const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:4000";
           const res = await axios.post(`${BASE_URL}/google-authentication`, {
             token: account?.accessToken,
           });
