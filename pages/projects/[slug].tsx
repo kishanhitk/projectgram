@@ -40,7 +40,6 @@ function ProjectPage({ project }: IProjectPageProps) {
         <Img
           width="100px"
           height="100px"
-          fit="fill"
           rounded={5}
           alt={project.title}
           src={project.bannerImage?.url}
@@ -107,7 +106,6 @@ const CommentSection = ({ project }: ICommentSectionProps) => {
             <FormControl>
               <FormLabel>Post a review</FormLabel>
               <Textarea
-                type="text"
                 required
                 value={userComment}
                 onChange={(e) => setUserComment(e.target.value)}

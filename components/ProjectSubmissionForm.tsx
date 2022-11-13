@@ -144,7 +144,6 @@ function ProjectSubmissionForm(props: HTMLChakraProps<"form">) {
         <FormControl>
           <FormLabel>Description</FormLabel>
           <Textarea
-            type="text"
             required
             value={longDescription}
             onChange={(e) => setLongDescription(e.target.value)}
@@ -194,7 +193,7 @@ function ProjectSubmissionForm(props: HTMLChakraProps<"form">) {
           />
         )}
         {imageUrl && (
-          <Box postion="relative" bg="gray.100">
+          <Box position="relative" bg="gray.100">
             <Button
               m={2}
               colorScheme="red"

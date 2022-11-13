@@ -26,7 +26,6 @@ function ProjectDisplayCard({ project }: IProjectDisplayCardProps) {
         <Img
           width="100%"
           height="50%"
-          fit="fill"
           rounded={5}
           alt={project.title}
           src={
