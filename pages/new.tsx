@@ -11,11 +11,11 @@ import Link from "next/link";
 import React from "react";
 import Logo from "components/Logo";
 import ProjectSubmissionForm from "components/ProjectSubmissionForm";
-import { useSession } from "next-auth/client";
+import { useSession } from "next-auth/react";
 import Head from "next/head";
 
 function SubmitProject() {
-  const [session, loading] = useSession();
+  const { data: session } = useSession();
   if (loading) return <CircularProgress />;
 
   return (

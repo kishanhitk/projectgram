@@ -11,7 +11,7 @@ import {
 import { useRouter } from "next/router";
 import * as React from "react";
 import { PasswordField } from "./PasswordField";
-import { signIn } from "next-auth/client";
+import { signIn } from "next-auth/react";
 
 function LoginForm(props: HTMLChakraProps<"form">) {
   const [username, setUsername] = React.useState("acer");
@@ -26,6 +26,12 @@ function LoginForm(props: HTMLChakraProps<"form">) {
         e.preventDefault();
         setIsLoading(true);
         try {
+          // const res = await signIn("credentials", {
+          //   username: username,
+          //   password: password,
+          //   callbackUrl: "/",
+          //   redirect: false,
+          // });
           const res = await signIn("credentials", {
             username: username,
             password: password,

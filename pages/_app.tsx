@@ -10,7 +10,7 @@ import theme from "./../theme/index";
 import "nprogress/nprogress.css";
 import dynamic from "next/dynamic";
 import React from "react";
-import { Provider } from "next-auth/client";
+import { SessionProvider } from "next-auth/react";
 
 const TopProgressBar = dynamic(
   () => {
@@ -20,12 +20,12 @@ const TopProgressBar = dynamic(
 );
 function MyApp({ Component, pageProps }) {
   return (
-    <Provider session={pageProps.session}>
+    <SessionProvider session={pageProps.session}>
       <ChakraProvider theme={theme}>
         <TopProgressBar />
         <Component {...pageProps} />
       </ChakraProvider>
-    </Provider>
+    </SessionProvider>
   );
 }
 

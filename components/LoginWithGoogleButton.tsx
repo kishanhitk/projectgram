@@ -1,5 +1,5 @@
 import { Button } from "@chakra-ui/react";
-import { signIn } from "next-auth/client";
+import { signIn } from "next-auth/react";
 import React from "react";
 import { FaGoogle } from "react-icons/fa";
 

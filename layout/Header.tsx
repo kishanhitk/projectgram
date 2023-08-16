@@ -18,7 +18,7 @@ import {
 import { Routes } from "config";
 import { SunIcon, MoonIcon, SearchIcon } from "@chakra-ui/icons";
 import { useRouter } from "next/router";
-import { useSession } from "next-auth/client";
+import { useSession } from "next-auth/react";
 interface NavLinkProps extends ButtonProps {
   url: string;
   children: ReactNode;
@@ -27,7 +27,7 @@ export const Header = () => {
   const router = useRouter();
   const { colorMode, toggleColorMode } = useColorMode();
   const [searchInput, setSearchInput] = React.useState("");
-  const [session, loading] = useSession();
+  const { data: session } = useSession();
   return (
     <Flex
       as="header"

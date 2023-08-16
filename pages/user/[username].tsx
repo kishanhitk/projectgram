@@ -7,7 +7,7 @@ import axios from "axios";
 import { BASE_URL } from "config";
 import { Project, User } from "types/projects";
 import ProjectDisplayCard from "components/ProjectDisplayCard";
-import { signOut, useSession } from "next-auth/client";
+import { signOut, useSession } from "next-auth/react";
 import UserAvatar from "components/UserAvatar";
 import Head from "next/head";
 import moment from "moment";
@@ -18,7 +18,7 @@ interface IProfilePageProps {
 const Profile = ({ user }: IProfilePageProps) => {
   const [isSelf, setIsSelf] = useState(false);
   const [userProjects, setUserProjects] = React.useState<Project[]>([]);
-  const [session, loading] = useSession();
+  const { data: session } = useSession();
   const getAllUsers = async () => {
     try {
       const response = await axios.get(

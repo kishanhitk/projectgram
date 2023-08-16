@@ -19,7 +19,7 @@ import ProjectDisplayCardWithButtons from "components/ProjectDisplayCardWithButt
 import UserAvatar from "components/UserAvatar";
 import { BASE_URL } from "config";
 import { MainLayout } from "layout";
-import { session, useSession } from "next-auth/client";
+import { session, useSession } from "next-auth/react";
 import Head from "next/head";
 import React from "react";
 import { Project, Comment } from "types/projects";
@@ -66,7 +66,7 @@ interface ICommentSectionProps {
 }
 const CommentSection = ({ project }: ICommentSectionProps) => {
   const [userComment, setUserComment] = React.useState("");
-  const [session, loading] = useSession();
+  const { data: session } = useSession();
   const [comments, setComments] = React.useState<Comment[]>([]);
 
   const fetchComments = async () => {

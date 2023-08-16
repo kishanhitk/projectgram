@@ -20,12 +20,12 @@ import { useRouter } from "next/router";
 import * as React from "react";
 import { FiFile } from "react-icons/fi";
 import { ImCross } from "react-icons/im";
-import { useSession } from "next-auth/client";
+import { useSession } from "next-auth/react";
 import { Project, Tag } from "types/projects";
 import { CUIAutoComplete } from "chakra-ui-autocomplete";
 
 function ProjectSubmissionForm(props: HTMLChakraProps<"form">) {
-  const [session, loading] = useSession();
+  const { data: session } = useSession();
   const router = useRouter();
   const [isLoading, setIsLoading] = React.useState(false);
   const [title, setTitle] = React.useState("");

@@ -32,7 +32,7 @@ import {
 } from "@chakra-ui/icons";
 import Logo from "./Logo";
 import React from "react";
-import { useSession } from "next-auth/client";
+import { useSession } from "next-auth/react";
 import { Routes } from "config";
 import { NavLinkSolid } from "layout/Header";
 import router from "next/router";
@@ -43,7 +43,7 @@ export default function ResponsiveNavbar() {
   const { isOpen, onToggle } = useDisclosure();
   const [searchInput, setSearchInput] = React.useState("");
   const { colorMode, toggleColorMode } = useColorMode();
-  const [session, loading] = useSession();
+  const { data: session } = useSession();
   console.log(session?.access_token);
 
   console.log(session?.user);
